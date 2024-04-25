@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\transferenciaEnviadas;
+namespace App\Livewire\TransferenciaEnviadas;
 
 use App\Models\Branch;
 use Illuminate\Support\Facades\Auth;

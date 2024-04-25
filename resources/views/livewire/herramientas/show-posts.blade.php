@@ -8,7 +8,7 @@
     {{-- Inicio - Lista de Herramienta --}}
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class=" py-1 text-lg font-bold leading-tight tracking-tight text-dark-900 md:text-2xl dark:text-dark">
-            Lista de Herramientas | {{ $branch_name }}
+            Lista de Equipos | {{ $branch_name }}
         </h2>
         <x-table>
             <div class="px-3 py-3 flex items-center">

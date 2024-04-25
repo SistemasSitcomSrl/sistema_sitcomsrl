@@ -42,7 +42,6 @@ class ShowInventoryTransfer extends Component
     public function render()
     {
         $branch_id = Branch::where('user_id', Auth::user()->id)->value('id');
-
         $movements = TransfersInventories::select(
             'transfers_inventories.receipt_number',
             'transfers_inventories.departure_date',

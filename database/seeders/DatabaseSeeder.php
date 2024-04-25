@@ -34,21 +34,39 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'id' => '2',
+            'ci' => '6302878',
+            'name' => 'Rocky Keoma Rojas Vidal',
+            'email' => 'encargado.activo.scz@gmail.com',
+            'password' => Hash::make('*Sit*24*'),
+            'company_position' => 'Encargado de Activo',
+            'phone_number' => '73131938',
+        ])->assignRole('Encargado de Activo');
+
+        User::create([
+            'id' => '3',
             'ci' => '5857568',
             'name' => 'Roly Flores Montaño',
             'email' => 'encargado.almacen.scz@gmail.com',
             'password' => Hash::make('*Sit*24*'),
             'company_position' => 'Encargado de Almacen',
-            'phone_number' => '75617913',
+            'phone_number' => '74636352',
         ])->assignRole('Encargado de Almacen');
-
+        
         Branch::create([
             'id' => '1',
+            'name' => 'Activo Fijos',
+            'department' => 'Santa Cruz',
+            'direction' => 'Dir. Av. Mariscal Santa Cruz # 6350',
+            'number_phone' => '73131938',
+            'user_id' => '2'
+        ]);
+        Branch::create([
+            'id' => '2',
             'name' => 'Sucursal Santa Cruz',
             'department' => 'Santa Cruz',
             'direction' => 'Dir. Av. Mariscal Santa Cruz # 6350',
             'number_phone' => '74636352',
-            'user_id' => '2'
+            'user_id' => '3'
         ]);
 
         Projects::create([
