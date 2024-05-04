@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
         Projects::create([
             'cuce' => '4651-4542-4242A',
             'type' => 'LP',
-            'object' => 'Mantenimiento Control de Acceso Gestion 2023',
+            'object' => 'Mantenimiento Control de Acceso Gestion 2024',
             'entity' => 'YPFB',
             'ubi_entity' => 'Santa Cruz',
             'ubi_projects' => 'Santa Cruz',
