@@ -28,18 +28,21 @@
                     class="flex-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                 <form class="flex items-center pl-1 " method="POST" action="{{ route('downloadInventory') }}">
                     @csrf
-                    <div wire:model.live="selectBranch" class="flex items-center">
-                        <select wire:model.live="postForm.select" wire:click="resetInput" name="branch_inventory"
-                            class="mx-2 form-control">
-                            <option value="0">Todas Las Sucursales
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                            </option>
-                            @foreach ($inputBranch as $branch)
-                                <option value="{{ $branch->id }}">
-                                    {{ $branch->name }}&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                            @endforeach
-                        </select>
-                    </div>
+
+                    @can('admin.inventory.select')
+                        <div wire:model.live="selectBranch" class="flex items-center">
+                            <select wire:model.live="postForm.select" wire:click="resetInput" name="branch_inventory"
+                                class="mx-2 form-control">
+                                <option value="0">Todas Las Sucursales
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                </option>
+                                @foreach ($inputBranch as $branch)
+                                    <option value="{{ $branch->id }}">
+                                        {{ $branch->name }}&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endcan
 
                     @can('admin.inventory.pdf')
                         <div>

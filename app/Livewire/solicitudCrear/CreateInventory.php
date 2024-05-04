@@ -25,7 +25,7 @@ class CreateInventory extends Component
     public $openAdd = false;
     public $openCreate = false;
     public $create_name_equipment, $create_bar_Code, $create_brand, $create_color, $create_amount, $create_location, $create_unit_measure, $create_price, $create_image;
-   
+
     public $toolsCollection;
     public $imageTool;
     public $select_type = '';
@@ -89,7 +89,7 @@ class CreateInventory extends Component
         $this->toolsCollection = collect();
     }
     public function openCreateModal()
-    {        
+    {
         $this->reset([
             'create_name_equipment',
             'create_amount',
@@ -99,7 +99,7 @@ class CreateInventory extends Component
             'searchForm.create_color',
             'searchForm.create_location',
             'searchForm.create_unit_measure',
-            'searchForm.create_price',          
+            'searchForm.create_price',
         ]);
         $this->stateInput = false;
         $this->searchForm['select_type'] = "";
@@ -193,7 +193,7 @@ class CreateInventory extends Component
         $this->inventoryEdit['unit_measure'] = $toll->unit_measure;
         $this->inventoryEdit['price'] = $toll->price;
         $this->inventoryEdit['type'] = $toll->type;
-        $this->id = $toll->id;      
+        $this->id = $toll->id;
     }
     public function addTool($id)
     {
@@ -322,7 +322,10 @@ class CreateInventory extends Component
     }
     public function buscarHerramienta()
     {
-        $inventorySearch = Inventory::where('name_equipment', $this->create_name_equipment)->first();
+        $branch_id = Branch::where('user_id', Auth::user()->id)->value('id');
+        $inventorySearch = Inventory::where('branch_id', $branch_id)
+            ->where('name_equipment', $this->create_name_equipment)
+            ->first();
         $this->inventorySearch = $inventorySearch;
         if ($inventorySearch) {
             $this->search_id = $inventorySearch->id;

@@ -14,13 +14,13 @@
             </div>
             <div>
                 <p class="w-full text-xs text-center font-bold py-1 align-middle m-0">
-                    LISTA DE CREAR O AGREGAR HERRAMIENTAS</p>
+                    SOLICITUD ADICIONAR EQUIPOS</p>
             </div>
 
             <div class="w-full">
                 <button type="button"
                     class="w-full m-0 text-xs text-white bg-blue-600 font-medium rounded-lg py-1.5 me-2 mb-2 " disabled>
-                    DATOS DEL RESPONSABLE DE LOS EQUIPOS DE HERRAMIENTAS
+                    DATOS DEL RESPONSABLE 
                 </button>
             </div>
 
@@ -38,7 +38,7 @@
             <div class="w-full">
                 <button type="button"
                     class="w-full m-0 text-xs text-white bg-blue-600 font-medium rounded-lg py-1.5 me-2 mb-2 " disabled>
-                    DETALLES DE LAS HERRAMIENTAS
+                    DETALLES DE LOS EQUIPOS
                 </button>
             </div>
             <div class="pb-2">
@@ -48,7 +48,7 @@
                             <th>Nro</th>
                             <th>Nombre</th>
                             <th>Unidad</th>
-                            <th>Ubicacion</th>
+                            <th>Ubicación</th>
                             <th>Precio</th>
                             <th>Tipo</th>
                             <th>Cantidad</th>
@@ -93,7 +93,7 @@
             </div>
             <div class="pb-32 text-sm">
                 <p class="w-4/5 text-justify  py-1 align-middle m-0  ">
-                    El presente compromiso aplica para el uso correcto de los equipos o heramientas.
+                    El presente compromiso aplica para el uso correcto de la solicitud para crear o agregar equipos.
                 </p>
 
                 <p class="w-4/5 text-xs font-bold text-justify py-1 align-middle m-0  ">
@@ -269,7 +269,7 @@
         </div>
     </div>
 
-    {{-- Inicio - Modal Crear Herramienta --}}
+    {{-- Inicio - Modal Crear Equipo --}}
     @if ($openCreate)
         <div class="bg-gray-800 bg-opacity-25 fixed inset-0 ">
             <div class="pt-1">
@@ -465,7 +465,7 @@
                                                 src="{{ asset('storage/' . $searchImageTool) }}">
                                         </div>
                                     @else
-                                        <x-label value="La Herramienta Selecionada No Tiene Imagen." />
+                                        <x-label value="El Equipo Selecionado No Tiene Imagen." />
                                     @endif
                                 @endif
                             </div>
@@ -483,9 +483,9 @@
             </div>
         </div>
     @endif
-    {{-- Fin - Modal Crear Herramienta --}}
+    {{-- Fin - Modal Crear Equipo --}}
 
-    {{-- Inicio Modal Agregar Herramienta --}}
+    {{-- Inicio Modal Agregar Equipo --}}
     @if ($openAdd)
         <div class="bg-gray-800 bg-opacity-25 fixed inset-0 ">
             <div class="pt-1">
@@ -493,7 +493,7 @@
                     <div class="bg-white shadow rounded-lg p-6">
                         <div class="flex">
                             <p class="font-bold text-base align-middle m-0  ">
-                                Añadir la Cantidad de Herramienta
+                                Añadir la Cantidad de Equipo
                             </p>
                             <button type="button" wire:click="$set('openAdd',false)"
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
@@ -584,7 +584,7 @@
                                         <x-input-error for="update_image" />
                                     </div>
                                 @else
-                                    <x-label value="La Herramienta Selecionada No Tiene Imagen." />
+                                    <x-label value="El Equipo Selecionado No Tiene Imagen." />
                                 @endif
                             </div>
                             <div class="text-right mt-1">
@@ -603,5 +603,5 @@
             </div>
         </div>
     @endif
-    {{-- Fin Modal Agregar Herramienta --}}
+    {{-- Fin Modal Agregar Equipo --}}
 </div>

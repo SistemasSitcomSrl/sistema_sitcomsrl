@@ -143,7 +143,7 @@
 
     <body>
         <div class="header">
-            <h2>Solicitud Agregar Equipo</h2>
+            <h2>Solicitud Adicionar Equipos</h2>
         </div>
         <div id="footer">
             <p class="textFooter">
@@ -175,7 +175,7 @@
 <div class="customer-info">
     <table>
         <tr>
-            <th style="text-align: center; font-size: 12px;" colspan="6">Solicitud - Datos de la Sucursal
+            <th style="text-align: center; font-size: 12px;" colspan="6">Datos del Responsable
             </th>
         </tr>
         @foreach ($movements as $movement)
@@ -245,8 +245,7 @@
     <label style="font-weight: bold">Nota:</label>
     <label>Las herramientas en azul se están aumentando y las rojas son las nuevas que se agregarán.</label>
     <br>
-    <label>El presente compromiso aplica para el uso correcto de los equipos o
-        heramientas.</label>
+    <label>El presente compromiso aplica para el uso correcto de la solicitud para crear o agregar equipos.</label>
     <br>
     <label style="font-weight: bold;">FIRMA DE QUIEN AGREGA O INCREMENTA LOS EQUIPOS O HERRAMIENTAS:</label>
 </div>

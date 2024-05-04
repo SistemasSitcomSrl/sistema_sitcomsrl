@@ -26,7 +26,6 @@ class CreateMovements extends Component
     public $imageTool;
     public $botonDeshabilitado = false;
     public $selectedInput = '';
-    public $selectedBranch = '';
     public $inventoryEditId = '';
     public $selectedTool = [null];
     public $selectedAll = [null];
@@ -61,23 +60,18 @@ class CreateMovements extends Component
     public function projectName()
     {
         $this->openCreate = true;
-        $this->projects = Projects::select('id', 'object')->where('state', true)->get();
+        //volvemos array todos los ci de esta tabla a ['1,'4','3,]
+        $ci_array = Projects::select('projects.id')
+            ->join('movements', 'projects.id', '=', 'movements.id_project')
+            ->groupBy('projects.id')
+            ->where('movements.state', 0)
+            ->whereIn('movements.state_create', [2, 3, 4, 5])
+            ->pluck('projects.id');
+        $array_ci = $ci_array->toArray();
+
+        $this->projects = Projects::select('id', 'object')->where('state', true)->whereNotIn('id', $array_ci)->get();
     }
-    public function branchName()
-    {
-        $this->botonDeshabilitado = true;
-        $this->openBranch = true;
-        $this->branches = Branch::select('id', 'name')->get();
-    }
-    //Devolver el valor selecionado del Modal Proyecto
-    public function dataProject()
-    {
-        $this->reset(['openCreate']);
-    }
-    public function dataBranch()
-    {
-        $this->reset(['openBranch']);
-    }
+
     //Eliminar elemento de la lista
     public function deleteItemTool($idItemTool)
     {
@@ -98,7 +92,7 @@ class CreateMovements extends Component
         if ($countAll > 1) {
             if ($this->selectedInput != null) {
 
-                $idMax = Movements::where('branch_id', $branch_id)->get()->max(function ($item) {
+                $idMax = Movements::where('branch_id', $branch_id)->where('id_project', $this->selectedInput)->get()->max(function ($item) {
                     // Dividir la cadena en letras y números              
                     $idMax = explode(".", $item->receipt_number);
                     // Obtener el número
@@ -120,10 +114,6 @@ class CreateMovements extends Component
                         'amount' => $amountTool
                     ]);
                     $branch_id = Branch::where('user_id', Auth::user()->id)->value('id');
-
-                    if ($branch_id == null) {
-                        $branch_id = $this->selectedBranch;
-                    }
 
                     Movements::create([
                         'receipt_number' => $counterReceipt,
@@ -153,7 +143,9 @@ class CreateMovements extends Component
 
     public function editar($idToll)
     {
+        $this->reset('orderAmount');
         $this->resetValidation();
+
         $this->openImagen = true;
         $this->inventoryEditId = $idToll;
         $toll = Inventory::find($idToll);
@@ -166,7 +158,7 @@ class CreateMovements extends Component
         $this->inventoryEdit['location'] = $toll->location;
         $this->inventoryEdit['unit_measure'] = $toll->unit_measure;
         $this->inventoryEdit['bar_Code'] = $toll->bar_Code;
-        $this->inventoryEdit['type'] = $toll->type;      
+        $this->inventoryEdit['type'] = $toll->type;
         $this->amount = $toll->amount;
         $this->id = $toll->id;
     }
@@ -212,13 +204,6 @@ class CreateMovements extends Component
     {
         $this->resetPage();
     }
-    public function updatedOpenImagen()
-    {
-
-        if ($this->openImagen == false) {
-            $this->reset(['orderAmount']);
-        }
-    }
     // Funcion Ordenar las filas de la vista inventario
     public function order($sort)
     {
@@ -235,31 +220,27 @@ class CreateMovements extends Component
     }
     public function render()
     {
+        //herramientas selecionadas
         $orderInventories = Inventory::whereKey($this->selectedTool)->get();
 
+        //Select selecionado para mostrar sus datos del Proyecto
         $names = Projects::join('users', 'projects.id_user', '=', 'users.id')
-            ->select('projects.object', 'projects.entity','projects.ubi_entity', 'users.name', 'users.company_position')
+            ->select('projects.object', 'projects.entity', 'projects.ubi_entity', 'users.name', 'users.company_position')
             ->where('projects.id', $this->selectedInput)
             ->get();
 
-        $branchesName = Branch::join('users', 'users.id', '=', 'branches.user_id')
-            ->select('users.name as name_user', 'users.company_position as company_position', 'branches.*')
-            ->where('branches.id', $this->selectedBranch)->get();
-
+        //Mostrar las herramienta de acuerdo a su sucursal
         $branch_id = Branch::where('user_id', Auth::user()->id)->value('id');
-
         $movements = Inventory::where(function ($query) use ($branch_id) {
             // Si $branch_id es null, no aplicamos la condición
             if ($branch_id !== null) {
                 $query->where('inventories.branch_id', $branch_id);
-            } else {
-                $query->where('inventories.branch_id', $this->selectedBranch);
             }
         })
             ->where('name_equipment', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->direction)
             ->simplePaginate($this->cant);
 
-        return view('livewire.movimientos.create-movements', compact('movements', 'orderInventories', 'names', 'branchesName'));
+        return view('livewire.movimientos.create-movements', compact('movements', 'orderInventories', 'names'));
     }
 }

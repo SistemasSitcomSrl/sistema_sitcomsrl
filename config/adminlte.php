@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
 
 return [
 
@@ -351,59 +350,102 @@ return [
                 [
                     'text' => '3.1 Sucursales',
                     'route' => 'admin.branch.index',
-                    'icon' => 'fa-solid fa-building',                 
-                    
+                    'icon' => 'fa-solid fa-building',
+
                     'can' => 'admin.branch.index',
                 ],
             ],
         ],
-
+        //Links para Encargado de Almacen
         [
             'text' => '4. Almacen',
             'icon' => '',
-            'can' => ['admin.inventory.index', 'admin.request.index', 'admin.retired.index'],
-            'submenu' => [ 
+            'can' => ['admin.Link.store', 'admin.Link.Admin'],
+            'submenu' => [
                 [
                     'text' => '4.1 Inventario',
                     'route' => 'admin.inventory.index',
-                    'icon' => 'fa-solid fa-screwdriver-wrench',                   
-                    'label_color' => 'danger',
+                    'icon' => 'fa-solid fa-screwdriver-wrench',
                     'can' => 'admin.inventory.index'
                 ],
                 [
-                    'text' => '4.2 Solicitud Crear Hta.',
+                    'text' => '4.2 Agregar',
                     'route' => 'requestInventory',
                     'icon' => 'fa-solid fa-truck-moving',
                     'can' => 'admin.request.index',
+                    'active' => ['/inventario/create'],
                 ],
                 [
-                    'text' => '4.3 Solicitud Retiro Hta.',
+                    'text' => '4.3 Dar de Baja',
                     'route' => 'retiredInventory',
                     'icon' => 'fa-solid fa-box-archive',
                     'can' => 'admin.retired.index',
+                    'active' => ['/retirado/crear'],
                 ],
                 [
-                    'text' => '4.4 Movimientos Hta.',
+                    'text' => '4.4 Asignar',
                     'route' => 'admin.movement.index',
                     'icon' => 'fas fa-fw fa-dolly',
                     'can' => 'admin.movement.index',
+                    'active' => ['/movimiento/create'],
                 ],
                 [
                     'text' => '4.5 Transf. Enviadas',
                     'route' => 'transfer-sent',
                     'icon' => 'fa-solid fa-arrow-right',
-                    'label_color' => 'success',
                     'can' => 'admin.transfer-sent.index',
+                    'active' => ['/transferencia/Crear'],
+
                 ],
                 [
                     'text' => '4.6 Transf. Recibidas',
                     'route' => 'transfer',
                     'icon' => 'fa-solid fa-arrow-left',
-                    'label_color' => 'success',
                     'can' => 'admin.transfer-receive.index',
                 ],
             ],
         ],
+        //Links para Encargado de Activo Fijo
+        [
+            'text' => '5. Activo Fijo',
+            'icon' => '',
+            'can' => ['admin.Link.active','admin.Link.Admin'],
+            'submenu' => [
+                [
+                    'text' => '5.1 Inventario',
+                    'route' => 'admin.inventory_activo.index',
+                    'icon' => 'fa-solid fa-screwdriver-wrench',
+                    'can' => 'admin.inventory.index',
+                ],
+                [
+                    'text' => '5.2 Personal',
+                    'route' => 'admin.workers.index',
+                    'icon' => 'fa-solid fa-address-card',
+                    'can' => 'admin.workers.index'
+                ],
+                [
+                    'text' => '5.3 Agregar',
+                    'route' => 'admin.request.index',
+                    'icon' => 'fa-solid fa-truck-moving',
+                    'can' => 'admin.request.index',
+                    'active' => ['/inventario/create'],
+                ],
+                [
+                    'text' => '5.4 Dar de Baja',
+                    'route' => 'admin.retired.index',
+                    'icon' => 'fa-solid fa-box-archive',
+                    'can' => 'admin.retired.index',
+                    'active' => ['/retirado/crear'],
+                ],
+                [
+                    'text' => '5.5 Asignar',
+                    'route' => 'admin.assign.index',
+                    'icon' => 'fa-solid fa-handshake-angle',
+                    'can' => 'admin.assign.index',
+                    'active' => ['/asignar/crear'],
+                ],
+            ],
+        ],       
     ],
 
     /*

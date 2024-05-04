@@ -174,7 +174,7 @@
 <div class="customer-info">
     <table>
         <tr>
-            <th style="text-align: center; font-size: 12px;" colspan="6">Datos de la Sucursal
+            <th style="text-align: center; font-size: 12px;" colspan="6">Datos del Responsable
             </th>
         </tr>
         @foreach ($movements as $movement)

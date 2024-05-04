@@ -18,7 +18,7 @@
                     <div class="bg-white  rounded-lg ">
                         <div class="flex pt-3">
                             <h3 class="font-bold text-base align-middle m-0 px-3">
-                                Nro {{ $receipt_number }}: Solicitud de Crear o Incrementar Cantidad Herramientas
+                                Nro {{ $receipt_number }}: Solicitud de Crear o Incrementar Cantidad de Equipos
                             </h3>
                             <button type="button" style="cursor:pointer;" wire:click="closeModalView"
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
@@ -43,7 +43,7 @@
                                 </select>
                                 <span>Entradas</span>
                             </div>
-                            <x-input class="flex-1 mx-1  text-sm" placeholder="Buscador Nombre Herramienta"
+                            <x-input class="flex-1 mx-1  text-sm" placeholder="Buscador Nombre del Equipo"
                                 type="text" wire:model.live="search" />
                         </div>
 
@@ -341,7 +341,7 @@
                     <div class="bg-white shadow rounded-lg p-6">
                         <div class="flex">
                             <p class="font-bold text-base align-middle m-0  ">
-                                Imagen de la Herramienta
+                                Imagen del Equipo
                             </p>
                             <button type="button" wire:click="$set('openImagen',false)"
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
@@ -358,7 +358,7 @@
                             <img style="width: 390px; height: 360px; display: block; margin: 0 auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
                                 src="{{ asset('storage/' . $imageTool) }}">
                         @else
-                            <x-label class="text-red" value="La Herramienta Selecionada No Tiene Imagen." />
+                            <x-label class="text-red" value="El Equipo Selecionado No Tiene Imagen." />
                         @endif
 
                     </div>
@@ -481,7 +481,7 @@
                                         <x-label value="Nombre de Equipo: *" />
                                         <x-input disabled="{{ $stateInput }}"
                                             wire:model.live="editForm.edit_name_equipment" type="text"
-                                            class="w-full" placeholder="Descripción Herramienta" />
+                                            class="w-full" placeholder="Descripción del Equipo" />
                                         <x-input-error for="editForm.edit_name_equipment" />
                                     </div>
                                 </div>
@@ -578,7 +578,7 @@
                                         </div>
                                     @else
                                         <div class="row-span-3 pt-2 pl-3" style="width: 300px; height: 200px;">
-                                            <x-label value="La Herramienta Selecionada No Tiene Imagen." />
+                                            <x-label value="La Equipo Selecionada No Tiene Imagen." />
                                         </div>
                                     @endif
                                 @endif

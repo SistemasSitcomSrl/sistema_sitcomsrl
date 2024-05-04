@@ -24,6 +24,10 @@ class MovementController extends Controller
     }
     public function download(Request $request)
     {
+        $id_project = request('movement_receipt_number');
+        $state = request('state');
+        $state_create = request('state_create');
+        dd($state_create);
         $date_create = Movements::where('receipt_number', request('movement_receipt_number'))->value('departure_date');
         $pdf = PDF::setPaper('letter')->loadView('livewire.movimientos.report-movements', [
             'movements' =>
@@ -57,7 +61,8 @@ class MovementController extends Controller
                         'branches.name as branch_branch',
                         'branches.direction as branch_direction'
                     )
-                    ->where('receipt_number', request('movement_receipt_number'))
+                     ->where('movements.id_project', $id_project)
+                    ->where('movements.state', $state)
                     ->get(),
                     'movements_histories' => MovementHistory::select()->get()
         ]);

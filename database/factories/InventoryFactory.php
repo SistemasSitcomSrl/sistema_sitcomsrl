@@ -27,8 +27,7 @@ class InventoryFactory extends Factory
             'price' => $this->faker->randomFloat(0, 10, 1000),
             'type' => $this->faker->randomElement(['Material', 'Activo', 'Herramienta']),
             'state' => 1,
-            'branch_id' => 1
-            //'branch_id' => $this->faker->numberBetween(1,2)
+            'branch_id' => $this->faker->numberBetween(1, 3)
         ];
     }
 }

@@ -207,30 +207,18 @@
                                         </span>
                                     </td>
                                 @endif
-                                <td class="py-1 flex text-left text-sm font-medium">
+                                <td class=" px-1 py-1 text-center">
                                     @can('admin.users.edit')
-                                        <div class="px-0.5 pt-0.5">
-                                            <button wire:click="editar({{ $user->id }})"
-                                                class= "inline-flex items-center px-3 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 transition ease-in-out duration-150">
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                            </button>
-                                        </div>
-                                    @endcan
-                                    @can('admin.users.rol')
-                                        <div class="px-0.5 pt-0.5">
-                                            <button wire:click="rol({{ $user->id }})"
-                                                class= "inline-flex items-center px-3 py-2 bg-green-600  border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-600 active:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-offset-2 transition ease-in-out duration-150">
-                                                <i class="fa-solid fa-sitemap  "></i>
-                                            </button>
-                                        </div>
+                                        <button wire:click="editar({{ $user->id }})"
+                                            class= "px-3 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 transition ease-in-out duration-150">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
                                     @endcan
                                     @can('admin.users.state')
-                                        <div class="px-0.5 pt-0.5">
-                                            <button wire:click="$dispatch('deleteUser',{{ $user->id }})"
-                                                class="inline-flex items-center justify-center px-3 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                                <i class="fa-solid fa-user-check"></i>
-                                            </button>
-                                        </div>
+                                        <button wire:click="$dispatch('deleteUser',{{ $user->id }})"
+                                            class="px-3 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                            <i class="fa-solid fa-user-check"></i>
+                                        </button>
                                     @endcan
 
                                 </td>
@@ -275,13 +263,25 @@
                             </button>
                         </div>
                         <form class="space-y-4 md:space-y-6" wire:submit="update">
-                            <div class="grid grid-cols-1 gap-4 mt-2">
+                            <div class="grid grid-cols-2 gap-4 mt-2">
                                 <div>
                                     <x-label value="Nombre Completo: *" />
                                     <x-input wire:model="userEdit.name" type="text"
                                         placeholder="Ingrese Nombre Completo" class="w-full" />
                                     <x-input-error for="userEdit.name" />
-                                </div>                                
+                                </div>
+                                <div>
+                                    <x-label value="Rol:" />
+                                    <select wire:model="userEdit.selectedRol"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="" disabled selected>Seleccione un Rol</option>
+                                        @foreach ($roles as $rol)
+                                            <option value="{{ $rol->name }}">{{ $rol->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <x-input-error for="userEdit.selectedRol" />
+                                </div>
                             </div>
                             <div class="grid grid-cols-2 gap-4 mt-2">
                                 <div>
@@ -361,59 +361,6 @@
         </div>
     @endif
     {{-- Fin - Modal Actualizar Usuario --}}
-
-    {{-- Inicio - Modal Rol Usuario --}}
-    @if ($openRol)
-        <div class="jetstream-modal fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 bg-gray-900 bg-opacity-25 ">
-            <div class="pt-6">
-                <div class="max-w-md mx-auto sm:px-6 lg:px-8 lg:py-6">
-                    <div class="bg-white shadow rounded-lg p-6">
-                        <div class="flex">
-                            <p class="font-bold text-base align-middle m-0  ">
-                                Asignar Roles | {{ $nameRol }}
-                            </p>
-                            <button type="button" wire:click="$set('openRol',false)"
-                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
-                                data-modal-hide="static-modal">
-                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                    fill="none" viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                </svg>
-                                <span class="sr-only">Close modal</span>
-                            </button>
-                        </div>
-                        <form class="space-y-4 md:space-y-6" wire:submit="assignRole({{ $userId }})">
-                            <div>
-                                @foreach ($roles as $rol)
-                                    <div wire:key="rol-{{ $rol->id }}" class="flex items-center">
-                                        <input id="checked-checkbox1-{{ $rol->id }}" type="checkbox"
-                                            style="cursor:pointer;" value="{{ $rol->id }}"
-                                            wire:model.live="rolForm.selectedRol"
-                                            class="w-4 h-4  text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-white-700 dark:border-gray-600">
-                                        <x-label class="px-1.5 pt-2" value="{{ $rol->name }}" />
-                                    </div>
-                                @endforeach
-                            </div>
-                            <x-input-error for="rolForm.selectedRol" />
-                            <div class="text-right ">
-                                <x-danger-button wire:click="$set('openRol',false)" class="mr-2">
-                                    <i class="fa-solid fa-xmark fa-lg"></i>&nbsp;Cancelar
-                                </x-danger-button>
-
-                                <x-secondary-button type="submit" wire:loading.attr="disabled" wire:target="update"
-                                    class="disabled:opacity-55">
-                                    <i class="fa-solid fa-floppy-disk fa-lg"></i>&nbsp;Actualizar
-                                </x-secondary-button>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-    {{-- Fin - Modal Rol Usuario --}}
 
     {{-- Inicio -  Alerta de confirmar de bloquear usuario --}}
     @push('js')

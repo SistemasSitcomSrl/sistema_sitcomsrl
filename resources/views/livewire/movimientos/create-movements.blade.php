@@ -102,7 +102,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="pb-32 text-sm">
+            <div class="pb-16 text-sm">
                 <p class="w-4/5 text-justify  py-1 align-middle m-0  ">
                     El presente compromiso aplica para el uso correcto de los equipos o heramientas prestadas.
                 </p>
@@ -111,7 +111,7 @@
                     FIRMA DE QUIEN RECIBE LOS EQUIPOS O HERRAMIENTAS:
                 </p>
             </div>
-            <div class="pb-28">
+            <div class="pb-8">
                 <div class=" text-center grid grid-cols-2 divide-x">
                     <div>
 
@@ -145,7 +145,7 @@
                 </div>
             </div>
 
-            <div class="pb-2 text-right">
+            <div class="text-center">
                 <x-danger-button wire:click="returnShow_movements()" class="mr-2">
                     <i class="fa-solid fa-xmark"></i> &nbsp; Cancelar
                 </x-danger-button>
@@ -160,9 +160,8 @@
 
         </div>
 
-        <div class="border-4  border-slate-200 w-5/12">
-            <x-table>
-                <div class="px-3 py-3 flex items-center">
+        <div class="border-4  border-slate-200 w-5/12">           
+                <div class="px-2 py-2 flex items-center">
                     <x-input class="flex-1 mx-2 text-xs" placeholder="Buscador Nombre Equipo" type="text"
                         wire:model.live="search" />
                 </div>
@@ -288,7 +287,6 @@
                         {{ $movements->links() }}
                     </div>
                 @endif
-            </x-table>
         </div>
     </div>
 
@@ -331,12 +329,8 @@
                             </div>
                             <div class="text-right text-xs">
                                 <x-danger-button wire:click="$set('openCreate',false)" class="mr-2  ">
-                                    <i class="fa-solid fa-xmark"></i> &nbsp; Cancelar
+                                    <i class="fa-solid fa-xmark"></i> &nbsp; Cerrar
                                 </x-danger-button>
-
-                                <x-secondary-button type="submit" id="btnSelectedProject">
-                                    <i class="fa-solid fa-floppy-disk"></i> &nbsp; Guardar
-                                </x-secondary-button>
                             </div>
                         </form>
 
@@ -346,61 +340,6 @@
         </div>
     @endif
     {{-- Fin Modal Seleccionar Proyecto --}}
-
-    {{-- Inicio Modal Seleccionar Sucursal --}}
-    @if ($openBranch)
-        <div class="bg-gray-800 bg-opacity-25 fixed inset-0 ">
-            <div class="pt-4">
-                <div class="max-w-xl mx-auto sm:px-6 lg:px-8 lg:py-16">
-                    <div class="bg-white shadow rounded-lg p-6">
-                        <div class="flex">
-                            <p class="font-bold text-base align-middle m-0  ">
-                                Seleccione Sucursal:
-                            </p>
-                            <button type="button" wire:click="$set('openBranch',false)"
-                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
-                                data-modal-hide="static-modal">
-                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                    fill="none" viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                </svg>
-                                <span class="sr-only">Close modal</span>
-                            </button>
-                        </div>
-                        <form class="space-y-4 md:space-y-6" wire:submit="dataBranch()">
-                            <div class=" my-2">
-                                <div>
-                                    <select wire:model='selectedBranch' id="countries"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        required>
-                                        <option value="" selected>Seleccione un Sucursal</option>
-
-                                        @foreach ($branches as $branch)
-                                            <option wire:key="selectBranch-{{ $branch->id }}"
-                                                value="{{ $branch->id }}">{{ $branch->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="text-right text-xs">
-                                <x-danger-button wire:click="$set('openBranch',false)" class="mr-2  ">
-                                    <i class="fa-solid fa-xmark"></i> &nbsp; Cancelar
-                                </x-danger-button>
-
-                                <x-secondary-button type="submit" id="btnSelectedProject">
-                                    <i class="fa-solid fa-floppy-disk"></i> &nbsp; Guardar
-                                </x-secondary-button>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-    {{-- Fin Modal Seleccionar Sucursal --}}
 
     {{-- Inicio Modal Seleccionar Cantidad Herramienta --}}
     @if ($openImagen)

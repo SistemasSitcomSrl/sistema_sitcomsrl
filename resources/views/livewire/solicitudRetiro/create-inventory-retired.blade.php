@@ -14,13 +14,13 @@
             </div>
             <div>
                 <p class="w-full text-xs text-center font-bold py-1 align-middle m-0">
-                    SOLICITUD DE LISTA DE HERRAMIENTAS ANULADAS</p>
+                    SOLICITUD DE ANULACION DE EQUIPOS</p>
             </div>
 
             <div class="w-full">
                 <button type="button"
                     class="w-full m-0 text-xs text-white bg-blue-600 font-medium rounded-lg py-1.5 me-2 mb-2 " disabled>
-                    DATOS DEL RESPONSABLE DE LOS EQUIPOS DE HERRAMIENTAS
+                    DATOS DEL RESPONSABLE
                 </button>
             </div>
 
@@ -38,7 +38,8 @@
             <div class="w-full">
                 <button type="button"
                     class="w-full m-0 text-xs text-white bg-blue-600 font-medium rounded-lg py-1.5 me-2 mb-2 " disabled>
-                    DETALLES DE LAS HERRAMIENTAS
+                    DETALLES DE LOS EQUIPOS
+                    
                 </button>
             </div>
             <div class="pb-2">
@@ -48,7 +49,7 @@
                             <th class="text-center">Nro</th>
                             <th>Nombre</th>
                             <th>Unidad</th>
-                            <th class="text-center">Ubicacion</th>
+                            <th class="text-center">Ubicación</th>
                             <th class="text-center">Precio</th>
                             <th class="text-center">Cantidad</th>
                         </tr>
@@ -76,7 +77,7 @@
             </div>
             <div class="pb-32 text-sm">
                 <p class="w-4/5 text-justify  py-1 align-middle m-0  ">
-                    El presente compromiso aplica para el uso correcto de los equipos o heramientas.
+                    El presente compromiso aplica para el uso correcto de la solicitud para crear o agregar equipos.
                 </p>
 
                 <p class="w-4/5 text-xs font-bold text-justify py-1 align-middle m-0  ">
@@ -244,7 +245,7 @@
         </div>
     </div>
 
-    {{-- Inicio Modal Reporte de Retiro de Herramienta --}}
+    {{-- Inicio Modal Reporte de Retiro de Equipo --}}
     @if ($openAdd)
         <div class="bg-gray-800 bg-opacity-25 fixed inset-0 ">
             <div class="pt-1">
@@ -252,7 +253,7 @@
                     <div class="bg-white shadow rounded-lg p-6">
                         <div class="flex">
                             <p class="font-bold text-base align-middle m-0  ">
-                                Observación de Herramienta en Mal Estado
+                                Observación de Equipo en Mal Estado
                             </p>
                             <button type="button" wire:click="$set('openAdd',false)"
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
@@ -420,5 +421,5 @@
             </div>
         </div>
     @endif
-    {{-- Fin Modal Reporte de Retiro de Herramienta --}}
+    {{-- Fin Modal Reporte de Retiro de Equipos --}}
 </div>

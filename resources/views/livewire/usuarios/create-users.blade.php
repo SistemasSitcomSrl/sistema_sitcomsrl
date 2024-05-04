@@ -25,12 +25,24 @@
                             </button>
                         </div>
                         <form class="space-y-4 md:space-y-6" wire:submit="save">
-                            <div class="grid grid-cols-1 gap-4 mt-2">
+                            <div class="grid grid-cols-2 gap-4 mt-2">
                                 <div>
                                     <x-label value="Nombre Completo: *" />
                                     <x-input wire:model="name" type="text" class="w-full"
                                         placeholder="Ingrese Nombre Completo" />
                                     <x-input-error for="name" />
+                                </div>
+                                <div>
+                                    <x-label value="Rol:" />
+                                    <select wire:model="selectedRol"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="" disabled selected>Seleccione un Rol</option>
+                                        @foreach ($roles as $rol)
+                                            <option value="{{ $rol->name }}">{{ $rol->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <x-input-error for="selectedRol" />
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-4 mt-2">
@@ -48,13 +60,13 @@
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-2 gap-4 mt-2">                                
+                            <div class="grid grid-cols-2 gap-4 mt-2">
                                 <div>
                                     <x-label value="Cargo Empresa: *" />
                                     <x-input wire:model="company_position" type="text" class="w-full"
                                         placeholder="Ingrese Cargo Empresa" />
                                     <x-input-error for="company_position" />
-                                </div>                                
+                                </div>
                                 <div>
                                     <x-label value="Numero Celular: *" />
                                     <x-input wire:model="phone_number" id="NumberPhone" type="text" class="w-full"
@@ -101,8 +113,8 @@
                                     <i class="fa-solid fa-xmark fa-lg"></i>&nbsp;Cancelar
                                 </x-danger-button>
 
-                                <x-secondary-button wire:click="create" wire:loading.attr="disabled" wire:target="save"
-                                    class="disabled:opacity-55">
+                                <x-secondary-button wire:click="create" wire:loading.attr="disabled"
+                                    wire:target="save" class="disabled:opacity-55">
                                     <i class="fa-solid fa-floppy-disk fa-lg"></i>&nbsp;Guardar
                                 </x-secondary-button>
                             </div>

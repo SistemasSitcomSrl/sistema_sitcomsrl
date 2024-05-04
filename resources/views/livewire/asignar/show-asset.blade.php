@@ -1,7 +1,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <h2 class="py-1 text-lg font-bold leading-tight tracking-tight text-dark-900 md:text-2xl dark:text-dark">
-        Lista de Movimientos de Herramientas
+        Lista de Asignaciones de Activos
     </h2>
     <x-table>
         <div class="px-3 py-3 flex items-center">
@@ -15,12 +15,12 @@
                 </select>
                 <span>Entradas</span>
             </div>
-            <x-input class="flex-1 mx-2" placeholder="Buscador Nombre de Proyecto" type="text"
+            <x-input class="flex-1 mx-2" placeholder="Buscador Numero de Carnet" type="text"
                 wire:model.live="search" />
-            @can('admin.movement.create')
-                <a href="{{ Route('admin.movement.create') }}">
+            @can('admin.assign.create')
+                <a href="{{ Route('admin.assign.create') }}">
                     <x-secondary-button>
-                        <i class="fa-solid fa-plus"></i> &nbsp;Prestar Herramienta
+                        <i class="fa-solid fa-plus"></i> &nbsp;Asignar Activo
                     </x-secondary-button>
                 </a>
             @endcan
@@ -43,51 +43,37 @@
                             @else
                                 <i class= "fas fa-sort ">&nbsp;</i>Nro
                             @endif
-
                         </th>
                         <th scope="col"
                             class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            wire:click="order('name_project')">
+                            wire:click="order('ci')">
 
-                            @if ($sort == 'name_project')
+                            @if ($sort == 'ci')
                                 @if ($direction == 'asc')
-                                    <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Nombre del Proyecto
+                                    <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Nro de Carnet
                                 @else
-                                    <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Nombre del Proyecto
+                                    <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Nro de Carnet
                                 @endif
                             @else
-                                <i class= "fas fa-sort ">&nbsp;</i>Nombre del Proyecto
+                                <i class= "fas fa-sort ">&nbsp;</i>Nro de Carnet
                             @endif
 
                         </th>
                         <th scope="col"
                             class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            wire:click="order('entity_project')">
+                            wire:click="order('name')">
 
-                            @if ($sort == 'entity_project')
+                            @if ($sort == 'name')
                                 @if ($direction == 'asc')
-                                    <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Entidad
+                                    <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Nombre
                                 @else
-                                    <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Entidad
+                                    <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Nombre
                                 @endif
                             @else
-                                <i class= "fas fa-sort ">&nbsp;</i>Entidad
+                                <i class= "fas fa-sort ">&nbsp;</i>Nombre
                             @endif
                         </th>
-                        <th scope="col"
-                            class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            wire:click="order('name_user')">
 
-                            @if ($sort == 'name_user')
-                                @if ($direction == 'asc')
-                                    <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Encargado Recibir
-                                @else
-                                    <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Encargado Recibir
-                                @endif
-                            @else
-                                <i class= "fas fa-sort ">&nbsp;</i>Encargado Recibir
-                            @endif
-                        </th>
                         <th scope="col"
                             class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             wire:click="order('name_auth')">
@@ -130,7 +116,7 @@
                             @endif
                         </th>
                         @php
-                            $can = Gate::allows('admin.movement.see') || Gate::allows('admin.movement.pdf');
+                            $can = Gate::allows('admin.assign.see') || Gate::allows('admin.assign.pdf');
                         @endphp
                         @if ($can)
                             <th scope="col"
@@ -139,29 +125,23 @@
                             </th>
                         @endif
                     </tr>
-                </thead>
-
+                </thead>              
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($movements as $movement)
                         <tr wire:key="movement-{{ $movement->created_at->toString() }}">
-                            <td class="px-1 py-2 text-center">
+                            <td class="px-1 py-2  text-center">
                                 <div class="text-sm text-gray-900">
                                     {{ $movement->receipt_number }}
                                 </div>
                             </td>
                             <td class="px-1 py-2">
                                 <div class="text-sm text-gray-900">
-                                    {{ $movement->name_project }}
+                                    {{ $movement->ci }}
                                 </div>
                             </td>
                             <td class="px-1 py-2">
                                 <div class="text-sm text-gray-900">
-                                    {{ $movement->entity_project }}
-                                </div>
-                            </td>
-                            <td class="px-1 py-2">
-                                <div class="text-sm text-gray-900">
-                                    {{ $movement->name_user }}
+                                    {{ $movement->name }} {{ $movement->last_name }}
                                 </div>
                             </td>
                             <td class="px-1 py-2">
@@ -232,29 +212,29 @@
                                         <span
                                             class="inline-flex items-center bg-indigo-500 text-white text-xs font-medium px-2.5 py-0.5 rounded-full ">
                                             <span class="w-2 h-2 me-1 bg-indigo-100 rounded-full"></span>
-                                            En Espera | Admin.
+                                            En Espera | Almacen.
                                         </span>
                                     </td>
                                 @break
                             @endswitch
                             <td class="flex px-1 py-2 pt-1 text-left text-sm font-medium ">
-                                @can('admin.movement.see')
+                                @can('admin.assign.see')
                                     <div>
-                                        @livewire('movimientos.view-movements', ['receipt_number' => $movement->id_project, 'state_receipt' => $movement->state, 'created_at_receipt' => $movement->created_at->toString()], key($movement->created_at->toString()))
+                                        @livewire('asignar.view-asset', ['receipt_number' => $movement->id_worker, 'state_receipt' => $movement->state, 'created_at_receipt' => $movement->created_at->toString()], key($movement->created_at->toString()))
                                     </div>
                                 @endcan
 
                                 @if ($movement->state_create != 3)
-                                    @can('admin.movement.pdf')
+                                    @can('admin.assign.pdf')
                                         <div class="pl-1">
-                                            <form method="POST" action="{{ route('download') }}">
+                                            <form action="{{ route('admin.assign.pdf') }}" method="POST">
                                                 @csrf
                                                 <div>
                                                     <input type="text" name="state_create"
                                                         value="{{ $movement->state_create }}" hidden>
                                                     <input type="text" name="state" value="{{ $movement->state }}"
                                                         hidden>
-                                                    <button type="submit" value="{{ $movement->id_project }}"
+                                                    <button type="submit" value="{{ $movement->id_worker }}"
                                                         name="movement_receipt_number"
                                                         class= "inline-flex items-center px-2 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 transition ease-in-out duration-150">
                                                         <i class="fa-solid fa-file-pdf fa-lg"></i>

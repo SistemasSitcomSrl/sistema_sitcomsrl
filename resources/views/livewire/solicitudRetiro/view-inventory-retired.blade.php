@@ -13,7 +13,7 @@
                     <div class="bg-white  rounded-lg ">
                         <div class="flex pt-3">
                             <h3 class="font-bold text-base align-middle m-0 px-3">
-                                Nro {{ $receipt_number }}: Solicitud de Retiros de Herramientas
+                                Nro {{ $receipt_number }}: Solicitud de Retiros de Equipos
                             </h3>
                             <button type="button" style="cursor:pointer;" wire:click="closeModalView"
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
@@ -38,7 +38,7 @@
                                 </select>
                                 <span>Entradas</span>
                             </div>
-                            <x-input class="flex-1 mx-1  text-sm" placeholder="Buscador Nombre Herramienta"
+                            <x-input class="flex-1 mx-1  text-sm" placeholder="Buscador Nombre del Equipo"
                                 type="text" wire:model.live="search" />
                         </div>
 
@@ -346,7 +346,7 @@
         </div>
     @endif
 
-    {{-- Inicio Modal Visualizar una Herramienta --}}
+    {{-- Inicio Modal Visualizar una Equipo --}}
     @if ($openImagen)
         <div class="jetstream-modal fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 bg-gray-900 bg-opacity-25 ">
             <div class="pt-6">
@@ -354,7 +354,7 @@
                     <div class="bg-white shadow rounded-lg p-6">
                         <div class="flex">
                             <p class="font-bold text-base align-middle m-0  ">
-                                Imagen de la Herramienta
+                                Imagen del Equipo
                             </p>
                             <button type="button" wire:click="$set('openImagen',false)"
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
@@ -371,14 +371,14 @@
                             <img style="width: 390px; height: 360px; display: block; margin: 0 auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
                                 src="{{ asset('storage/' . $imageTool) }}">
                         @else
-                            <x-label class="text-red" value="La Herramienta Selecionada No Tiene Imagen." />
+                            <x-label class="text-red" value="El Equipo Selecionado No Tiene Imagen." />
                         @endif
                     </div>
                 </div>
             </div>
         </div>
     @endif
-    {{-- Fin Modal Visualizar una Herramienta --}}
+    {{-- Fin Modal Visualizar una Equipo --}}
 
     {{-- Inicio Modal Deblinar Solicitud --}}
     @if ($openDecline)

@@ -5,10 +5,11 @@ namespace App\Livewire\Usuarios;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class CreateUsers extends Component
 {
-    public $name, $ci, $email, $password, $passwordConfirmation, $phone_number, $company_position, $branch;
+    public $name, $ci, $email, $password, $passwordConfirmation, $phone_number, $company_position, $branch, $selectedRol = '';
     public $openCreate = false;
     public $validationAttributes = [
         'name' => 'nombre completo',
@@ -18,6 +19,7 @@ class CreateUsers extends Component
         'phone_number' => 'numero',
         'company_position' => 'cargo',
         'branch' => 'sucursal',
+        'selectedRol' => 'rol'
     ];
     protected $listeners = ['render'];
     // regex:/^[\p{L}\p{M}\s.\-]+$/u|
@@ -29,19 +31,9 @@ class CreateUsers extends Component
         'passwordConfirmation' => 'required|same:password',
         'phone_number' => 'required|numeric|min:10',
         'company_position' => 'required|max:255|string',
+        'selectedRol' => 'required',
 
     ];
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
-
-    public function updatingOpenCreate()
-    {
-        if ($this->openCreate == true) {
-            $this->reset(['name', 'email', 'password', 'phone_number', 'company_position', 'branch']);
-        }
-    }
     public function create()
     {
         $this->validate();
@@ -54,6 +46,9 @@ class CreateUsers extends Component
             'company_position' => $this->company_position,
             'branch' => $this->branch
         ]);
+        $user = User::where('ci', $this->ci)->first();
+        $user->assignRole($this->selectedRol);
+
         //Renderizar Showposts
         $this->dispatch('render')->to(ShowUsers::class);
         //Aletar despues de crear
@@ -63,10 +58,13 @@ class CreateUsers extends Component
     }
     public function save()
     {
+        $this->resetValidation();
+        $this->reset(['name', 'ci', 'email', 'password', 'phone_number', 'company_position', 'branch', 'openCreate']);
         $this->openCreate = true;
     }
     public function render()
     {
-        return view('livewire.usuarios.create-users');
+        $roles = Role::select('name', 'id')->get();
+        return view('livewire.usuarios.create-users', compact('roles'));
     }
 }

@@ -21,7 +21,7 @@
 
                 @can('admin.transfer-sent.create')
                     <a href="{{ Route('createTransfer') }}">
-                        <x-secondary-button wire:click="save">
+                        <x-secondary-button >
                             <i class="fa-solid fa-plus"></i> &nbsp;Transferir Herramienta
                         </x-secondary-button>
                     </a>

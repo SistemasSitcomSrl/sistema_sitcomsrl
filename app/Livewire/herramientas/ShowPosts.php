@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Spatie\Permission\Models\Role;
 
 class ShowPosts extends Component
 {
@@ -113,16 +114,20 @@ class ShowPosts extends Component
             $this->sort = $sort;
         }
     }
+
     public function render()
     {
+        //Obtener el nombre de la sucursal para mostrarlo en la vista
         $branch_name = Branch::where('user_id', Auth::user()->id)->value('name');
 
+        // En caso de que no haya sucursal, se asigna el valor de "Todas las Sucursales"
         if ($branch_name == null) {
             $branch_name = "Todas las Sucursales";
         }
 
         $this->postForm['select'] = $branch_id = Branch::where('user_id', Auth::user()->id)->value('id');
 
+        // Si se selecciona una sucursal, se asigna el valor de la sucursal seleccionada
         if ($this->selectBranch != null) {
             if ($this->selectBranch == 0) {
                 $branch_id = null;
@@ -132,22 +137,45 @@ class ShowPosts extends Component
                 $branch_name = Branch::where('id', $this->selectBranch)->value('name');
             }
         }
+        //Obtener las sucursales para mostrarlas en el select sin la sucursal activo fijo
+        $inputBranch = Branch::select('id', 'name')->where('id', '!=', 1)->get();
 
-        $inputBranch = Branch::select('id', 'name')->get();
+        //Mostar los datos segun el rol
+        $rol = Role::join('model_has_roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->where('model_has_roles.model_id', Auth::user()->id)
+            ->value('roles.name');
 
-        $posts = Inventory::join('branches', 'inventories.branch_id', '=', 'branches.id')
-            ->select('inventories.*', 'branches.name as name_branch')
-            ->where(function ($query) use ($branch_id) {
-                // Si $branch_id es null, no aplicamos la condición
-                if ($branch_id !== null) {
-                    $query->where('inventories.branch_id', $branch_id);
-                }
-            })
-            ->where('inventories.name_equipment', 'like', '%' . $this->search . '%')
-            ->where('state', 1)
-            ->orderBy($this->sort, $this->direction)
-            ->paginate($this->cant);
+        // El switch se encarga de mostrar los datos segun el rol
+        switch ($rol) {
+            case 'Encargado de Activo':
+                // Si el rol es Encargado de Activo, solo se muestran los datos de la sucursal a la que pertenece
+                $posts = Inventory::join('branches', 'inventories.branch_id', '=', 'branches.id')
+                    ->select('inventories.*', 'branches.name as name_branch')
+                    ->where('inventories.branch_id', $branch_id)
+                    ->where('inventories.name_equipment', 'like', '%' . $this->search . '%')
+                    ->where('state', 1)
+                    ->orderBy($this->sort, $this->direction)
+                    ->paginate($this->cant);
+                break;
 
+            default:
+                // Si el rol es diferente de Encargado de Activo, se muestran los datos de todas las sucursales menos la de activo fijo
+                $posts = Inventory::join('branches', 'inventories.branch_id', '=', 'branches.id')
+                    ->select('inventories.*', 'branches.name as name_branch')
+                    ->where(function ($query) use ($branch_id) {
+                        // Si $branch_id es null, no aplicamos la condición
+                        if ($branch_id !== null) {
+                            $query->where('inventories.branch_id', $branch_id);
+                        } else {
+                            $query->where('inventories.branch_id', '!=', 1);
+                        }
+                    })
+                    ->where('inventories.name_equipment', 'like', '%' . $this->search . '%')
+                    ->where('state', 1)
+                    ->orderBy($this->sort, $this->direction)
+                    ->paginate($this->cant);
+                break;
+        }
         return view('livewire.herramientas.show-posts', compact('posts', 'branch_name', 'inputBranch'));
     }
 
