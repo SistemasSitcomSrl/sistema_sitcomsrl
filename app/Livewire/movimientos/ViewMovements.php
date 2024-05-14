@@ -291,8 +291,7 @@ class ViewMovements extends Component
             ->select('movements.*', 'movements.id as id_movements', 'inventories.*')
             ->where('movements.id_project', $this->receipt_number)
             ->where('movements.state', $this->state_receipt)
-            ->where('name_equipment', 'like', '%' . $this->search . '%')
-            ->orderByRaw("CAST(SUBSTRING_INDEX(receipt_number, '.', -1) AS DECIMAL) DESC")
+            ->where('name_equipment', 'like', '%' . $this->search . '%')           
             ->paginate($this->cant);
 
         $movements_histories = MovementHistory::select()->get();
