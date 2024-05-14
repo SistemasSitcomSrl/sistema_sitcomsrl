@@ -102,7 +102,7 @@
                                 <tbody class="divide-y divide-gray-200 border-y">
                                     @foreach ($inventories as $inventory)
                                         <tr class="bg-stone-100"
-                                            wire:key="inventory-{{ $inventory->id_inventory }}- {{ $inventory->receipt_number }}">
+                                            wire:key="inventory-{{ $inventory->id_inventory }}-{{ $inventory->receipt_number }}">
                                             @can('admin.movement.edit')
                                                 @php
                                                     $time = App\Models\MovementHistory::where(
@@ -122,8 +122,8 @@
                                                             </td>
                                                         @else
                                                             <td class="px-1 py-1.5 text-center">
-                                                                <input id="checked-checkbox1-{{ $inventory->id_movements }}"
-                                                                    name="checked-checkbox1-{{ $inventory->id_movements }}"
+                                                                <input id="checked-checkbox-{{ $inventory->id_movements }}"
+                                                                    name="checked-checkbox-{{ $inventory->id_movements }}"
                                                                     type="checkbox" value="{{ $inventory->id_movements }}"
                                                                     wire:key="{{ $checkBoxKey }}"
                                                                     wire:model.live="selectedProducts.{{ $inventory->id_movements }}"
