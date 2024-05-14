@@ -83,7 +83,7 @@
                         </tr>
                     </thead>
                     @php
-                        $j = 0;
+                        $j = 1;
                     @endphp
                     <tbody>
                         @foreach ($orderInventories as $orderInventory)
