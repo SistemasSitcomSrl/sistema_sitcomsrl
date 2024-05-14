@@ -101,8 +101,7 @@
                                 @endphp
                                 <tbody class="divide-y divide-gray-200 border-y">
                                     @foreach ($inventories as $inventory)
-                                        <tr class="bg-stone-100"
-                                            wire:key="inventory-{{ $inventory->id_inventory }}-{{ $inventory->receipt_number }}">
+                                        <tr class="bg-stone-100">
                                             @can('admin.movement.edit')
                                                 @php
                                                     $time = App\Models\MovementHistory::where(
@@ -227,8 +226,7 @@
 
                                         @foreach ($movements_histories as $record)
                                             @if ($inventory->id_movements == $record->id_movements)
-                                                <tr
-                                                    wire:key="movements-{{ $record->id_movements }}-{{ $inventory->receipt_number }}">
+                                                <tr>
                                                     @can('admin.movement.edit')
                                                         <td class="px-1 py-1.5 text-center">
                                                         </td>

@@ -292,9 +292,9 @@ class ViewMovements extends Component
             ->where('movements.id_project', $this->receipt_number)
             ->where('movements.state', $this->state_receipt)
             ->where('name_equipment', 'like', '%' . $this->search . '%')
-            ->orderByRaw("CAST(SUBSTRING_INDEX(receipt_number, 'a-1.', -1) AS DECIMAL(10,2)) DESC")
+           
             ->paginate($this->cant);
-
+        
         $movements_histories = MovementHistory::select()->get();
         $this->name_project = Projects::where('id', $this->receipt_number)->value('object');
         $this->stateButton = Movements::where('id_project', $this->receipt_number)->where('state', $this->state_receipt)->value('state_create');
