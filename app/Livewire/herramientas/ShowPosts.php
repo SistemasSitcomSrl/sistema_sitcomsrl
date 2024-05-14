@@ -144,7 +144,7 @@ class ShowPosts extends Component
         $rol = Role::join('model_has_roles', 'roles.id', '=', 'model_has_roles.role_id')
             ->where('model_has_roles.model_id', Auth::user()->id)
             ->value('roles.name');
-
+                  
         // El switch se encarga de mostrar los datos segun el rol
         switch ($rol) {
             case 'Encargado de Activo':

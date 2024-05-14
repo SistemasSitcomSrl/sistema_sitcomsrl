@@ -42,7 +42,7 @@ class CreateTransfers extends Component
         'inventoryEdit.unit_measure' => '',
         'inventoryEdit.bar_Code' => '',
         'inventoryEdit.type' => '',
-        'inventoryEdit.amount' => '',       
+        'inventoryEdit.amount' => '',
     ];
     //Regla de Validacion Numerica
     protected $rules = [
@@ -56,8 +56,16 @@ class CreateTransfers extends Component
     public function projectName()
     {
         $this->openCreate = true;
+        //Obtener los id de las sucursales que tienen el rol encargado de activo
+        $activo_rol_branch = Branch::join('model_has_roles', 'branches.user_id', '=', 'model_has_roles.model_id')
+            ->where('model_has_roles.role_id', 3)
+            ->pluck('branches.id');
+
         $branch_id = Branch::where('user_id', Auth::user()->id)->value('id');
-        $this->branches = Branch::where('id', '<>', $branch_id)->get();
+
+        $this->branches = Branch::where('id', '!=', $branch_id)
+            ->whereNotIn('id', $activo_rol_branch)
+            ->get();
     }
     //Devolver el valor selecionado del Modal Proyecto
     public function dataProject()
@@ -94,7 +102,7 @@ class CreateTransfers extends Component
                     return $idMax[1];
                 });
                 $idMax++;
-                
+
                 $counterReceipt = 'T-' . $branch_id . '.' . $idMax;
 
                 unset($this->selectedTool[0]);
@@ -111,7 +119,7 @@ class CreateTransfers extends Component
                     ]);
 
                     $user_id = Branch::where('id', $this->selectedInput)->value('user_id');
-                   
+
                     Trasnfer::create([
                         'receipt_number' => $counterReceipt,
                         'branch_from_id' => $branch_id,
@@ -151,8 +159,8 @@ class CreateTransfers extends Component
         $this->inventoryEdit['brand'] = $toll->brand;
         $this->inventoryEdit['location'] = $toll->unit_measure;
         $this->inventoryEdit['bar_Code'] = $toll->type;
-        $this->inventoryEdit['amount'] = $toll->amount;  
-        $this->inventoryEdit['unit_measure'] = $toll->unit_measure;  
+        $this->inventoryEdit['amount'] = $toll->amount;
+        $this->inventoryEdit['unit_measure'] = $toll->unit_measure;
         $this->amount = $toll->amount;
         $this->id = $toll->id;
     }
@@ -204,7 +212,7 @@ class CreateTransfers extends Component
     {
         $this->resetPage();
     }
-   
+
     // Funcion Ordenar las filas de la vista inventario
     public function order($sort)
     {

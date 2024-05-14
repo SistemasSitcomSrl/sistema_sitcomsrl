@@ -20,7 +20,7 @@
             <div class="w-full">
                 <button type="button"
                     class="w-full m-0 text-xs text-white bg-blue-600 font-medium rounded-lg py-1.5 me-2 mb-2 " disabled>
-                    DATOS DEL RESPONSABLE 
+                    DATOS DEL RESPONSABLE
                 </button>
             </div>
 
@@ -371,12 +371,19 @@
                                         @endif
 
                                         <option value="" disabled selected>Seleccione Tipo</option>
-                                        <option value="activo">Activo Fijo
-                                        </option>
-                                        <option value="herramienta">Herramienta
-                                        </option>
-                                        <option value="material">Material
-                                        </option>
+                                        @switch($rol)
+                                            @case('Encargado de Almacen')
+                                                <option value="herramienta">Herramienta
+                                                </option>
+                                                <option value="material">Material
+                                                </option>
+                                            @break
+
+                                            @case('Encargado de Activo')
+                                                <option value="activo">Activo Fijo
+                                                </option>
+                                            @break
+                                        @endswitch
                                         </select>
                                         <x-input-error for="searchForm.select_type" />
                                     </div>
@@ -510,8 +517,8 @@
                                 <div class="grid grid-cols-1 gap-4 mt-1 ">
                                     <div>
                                         <x-label value="Nombre de Equipo:" />
-                                        <x-input wire:model="inventoryEdit.name_equipment" type="text" class="w-full"
-                                            disabled />
+                                        <x-input wire:model="inventoryEdit.name_equipment" type="text"
+                                            class="w-full" disabled />
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 mt-1">
@@ -545,8 +552,8 @@
                                             </option>
                                             <option value="material">Material
                                             </option>
-                                        </select>                                      
-                                    </div>                                   
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 mt-1">
                                     <div>
@@ -556,8 +563,8 @@
                                     </div>
                                     <div>
                                         <x-label value="Unidad medida:" />
-                                        <x-input wire:model="inventoryEdit.unit_measure" type="text" class="w-full"
-                                            disabled />
+                                        <x-input wire:model="inventoryEdit.unit_measure" type="text"
+                                            class="w-full" disabled />
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 mt-1">
@@ -565,10 +572,11 @@
                                         <x-label value="Codigo de Barra:" />
                                         <x-input wire:model="inventoryEdit.bar_Code" type="text" class="w-full"
                                             disabled />
-                                    </div>                                    
+                                    </div>
                                     <div>
                                         <x-label value="Cantidad a Agregar: *" />
-                                        <x-input wire:model="orderAmount" placeholder="Ingrese Cantidad" type="number" class="w-full" />
+                                        <x-input wire:model="orderAmount" placeholder="Ingrese Cantidad"
+                                            type="number" class="w-full" />
                                         <x-input-error for="orderAmount" />
                                     </div>
 

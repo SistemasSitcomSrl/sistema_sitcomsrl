@@ -398,6 +398,8 @@ class CreateInventory extends Component
     {
         $orderInventories = Inventory::whereKey($this->array_tool_id)->get();
 
+        $rol = Auth::user()->roles->first()->name ?? 'default';
+
         $branch_id = Branch::where('user_id', Auth::user()->id)->value('id');
 
         $movements = Inventory::where(function ($query) use ($branch_id) {
@@ -411,6 +413,6 @@ class CreateInventory extends Component
             ->orderBy($this->sort, $this->direction)
             ->simplePaginate($this->cant);
 
-        return view('livewire.solicitudCrear.create-inventory', compact('movements', 'orderInventories'));
+        return view('livewire.solicitudCrear.create-inventory', compact('movements', 'orderInventories','rol'));
     }
 }

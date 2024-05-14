@@ -333,6 +333,7 @@
                                             class="bg-white-50 border border-gray-500 text-gray-600 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                             disabled>
 
+                                            
                                             <option value="" disabled selected>Seleccione Tipo</option>
                                             <option value="activo">Activo Fijo
                                             </option>
