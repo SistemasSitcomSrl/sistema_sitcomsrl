@@ -101,7 +101,7 @@
                                 @endphp
                                 <tbody class="divide-y divide-gray-200 border-y">
                                     @foreach ($inventories as $inventory)
-                                        <tr class="bg-stone-100">
+                                        <tr class="bg-stone-100" wire:key="{{$inventory->id_movements}}-{{$inventory->receipt_number}}">
                                             @can('admin.movement.edit')
                                                 @php
                                                     $time = App\Models\MovementHistory::where(
