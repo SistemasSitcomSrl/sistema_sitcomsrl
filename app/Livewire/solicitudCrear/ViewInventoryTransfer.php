@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
-
+use Illuminate\Support\Facades\Auth;
 
 class ViewInventoryTransfer extends Component
 {
@@ -308,12 +308,14 @@ class ViewInventoryTransfer extends Component
     }
     public function render()
     {
+        $rol = Auth::user()->roles->first()->name ?? 'default';
+
         $inventories = TransfersInventories::where('receipt_number', $this->receipt_number)
             ->where('name_equipment', 'like', '%' . $this->search . '%')
             ->orderBy($this->orderSort, $this->orderDirection)
             ->paginate($this->cant);
         $state_create = TransfersInventories::where('receipt_number', $this->receipt_number)->value('state_create');
 
-        return view('livewire.solicitudCrear.view-inventory-transfer', compact('inventories', 'state_create'));
+        return view('livewire.solicitudCrear.view-inventory-transfer', compact('inventories', 'state_create', 'rol'));
     }
 }
