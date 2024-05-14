@@ -227,7 +227,7 @@
 
                                         @foreach ($movements_histories as $record)
                                             @if ($inventory->id_movements == $record->id_movements)
-                                                <tr wire:key="movements-{{ $record->id_movements }}">
+                                                <tr wire:key="movements-{{ $record->id_movements }}-{{ $inventory->receipt_number }}">
                                                     @can('admin.movement.edit')
                                                         <td class="px-1 py-1.5 text-center">
                                                         </td>
@@ -266,7 +266,7 @@
                                             @endif
                                         @endforeach
                                         @if (array_search($inventory->id_movements, array_keys($selectedProducts)))
-                                            <tr class="bg-emerald-100">
+                                            <tr class="bg-emerald-100" wire:key="movements-{{ $record->id_movements }}-{{ $inventory->receipt_number }}">
                                                 @can('admin.movement.edit')
                                                     <td class="px-1 py-1.5 text-center">
                                                     </td>
