@@ -103,7 +103,7 @@ class ViewInventoryTransfer extends Component
         $this->editForm['edit_brand'] = $tool->brand;
         $this->editForm['edit_color'] = $tool->color;
         $this->editForm['edit_amount'] = $tool->amount;
-        $this->editForm['edit_location'] = $tool->edit_location;
+        $this->editForm['edit_location'] = $tool->location;
         $this->editForm['edit_unit_measure'] = $tool->unit_measure;
         $this->editForm['edit_price'] = $tool->price;
         $this->editForm['select_type'] = $tool->type;
