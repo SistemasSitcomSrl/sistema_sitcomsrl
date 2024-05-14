@@ -227,7 +227,8 @@
 
                                         @foreach ($movements_histories as $record)
                                             @if ($inventory->id_movements == $record->id_movements)
-                                                <tr wire:key="movements-{{ $record->id_movements }}">
+                                                <tr
+                                                    wire:key="movements-{{ $record->id_movements }}-{{ $inventory->receipt_number }}">
                                                     @can('admin.movement.edit')
                                                         <td class="px-1 py-1.5 text-center">
                                                         </td>
@@ -266,7 +267,8 @@
                                             @endif
                                         @endforeach
                                         @if (array_search($inventory->id_movements, array_keys($selectedProducts)))
-                                            <tr class="bg-emerald-100">
+                                            <tr class="bg-emerald-100"
+                                                wire:key="inventory-{{ $inventory->id_movements }}-{{ $inventory->receipt_number }}">
                                                 @can('admin.movement.edit')
                                                     <td class="px-1 py-1.5 text-center">
                                                     </td>
@@ -447,128 +449,129 @@
                 </div>
             </div>
         </div>
-</div>
-@endif
 
-{{-- Inicio Modal Deblinar Solicitud --}}
-@if ($openDecline)
-    <div class="jetstream-modal fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 bg-gray-900 bg-opacity-25 ">
-        <div class="pt-6">
-            <div class="max-w-lg mx-auto sm:px-6 lg:px-8 lg:py-6">
-                <div class="bg-white shadow rounded-lg px-6 pt-4 pb-1">
-                    <div class="flex">
-                        <p class="font-bold text-base align-middle m-0  ">
-                            Observación de Solicitud Rechazada: *
-                        </p>
-                        <button type="button" wire:click="$set('openDecline',false)" wire:loading.attr="disabled"
-                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
-                            data-modal-hide="static-modal">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
+    @endif
+
+    {{-- Inicio Modal Deblinar Solicitud --}}
+    @if ($openDecline)
+        <div class="jetstream-modal fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 bg-gray-900 bg-opacity-25 ">
+            <div class="pt-6">
+                <div class="max-w-lg mx-auto sm:px-6 lg:px-8 lg:py-6">
+                    <div class="bg-white shadow rounded-lg px-6 pt-4 pb-1">
+                        <div class="flex">
+                            <p class="font-bold text-base align-middle m-0  ">
+                                Observación de Solicitud Rechazada: *
+                            </p>
+                            <button type="button" wire:click="$set('openDecline',false)"
+                                wire:loading.attr="disabled"
+                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
+                                data-modal-hide="static-modal">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                        <form wire:submit="declineRequest">
+                            <div class="">
+                                <textarea rows="4"wire:model.live="textDecline"
+                                    class="block p-2.5 w-full text-sm text-gray-900 dark:placeholder-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="Escribe tus observaciones aquí..."></textarea>
+                                <x-input-error for="textDecline" />
+                            </div>
+                            <div class="py-2 text-right">
+                                <x-danger-button wire:click="$set('openDecline',false)" wire:loading.attr="disabled"
+                                    class="mr-2">
+                                    <i class="fa-solid fa-xmark"></i> &nbsp; Cerrar
+                                </x-danger-button>
+                                <x-secondary-button type="submit" wire:loading.attr="disabled"
+                                    wire:target="declineRequest" class="disabled:opacity-55">
+                                    <i class="fa-solid fa-floppy-disk"></i> &nbsp; Guardar
+                                </x-secondary-button>
+                            </div>
+                        </form>
                     </div>
-                    <form wire:submit="declineRequest">
+                </div>
+            </div>
+        </div>
+    @endif
+    {{-- Fin Modal Deblinar Solicitud --}}
+
+    {{-- Inicio Modal Seleccionar Cantidad Herramienta --}}
+    @if ($openImagen)
+        <div class="jetstream-modal fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 bg-gray-900 bg-opacity-25 ">
+            <div class="pt-6">
+                <div class="max-w-lg mx-auto sm:px-6 lg:px-8 lg:py-6">
+                    <div class="bg-white shadow rounded-lg p-6">
+                        <div class="flex">
+                            <p class="font-bold text-base align-middle m-0  ">
+                                Imagen de la Herramienta
+                            </p>
+                            <button type="button" wire:click="$set('openImagen',false)" wire:loading.attr="disabled"
+                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
+                                data-modal-hide="static-modal">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                        @if ($imageTool->image_path)
+                            <img style="width: 390px; height: 360px; display: block; margin: 0 auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+                                src="{{ asset('storage/' . $imageTool->image_path) }}">
+                        @else
+                            <x-label class="text-red" value="La Herramienta Selecionada No Tiene Imagen." />
+                        @endif
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+    {{-- Fin Modal Seleccionar Cantidad Herramienta --}}
+
+    {{-- Inicio Modal Mensaje Solicitud --}}
+    @if ($openRequestMessage)
+        <div class="jetstream-modal fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 bg-gray-900 bg-opacity-25 ">
+            <div class="pt-6">
+                <div class="max-w-lg mx-auto sm:px-6 lg:px-8 lg:py-6">
+                    <div class="bg-white shadow rounded-lg px-6 pt-4 pb-1">
+                        <div class="flex">
+                            <p class="font-bold text-base align-middle m-0  ">
+                                Observaciones de Solicitud Rechazada: *
+                            </p>
+                            <button type="button" wire:click="$set('openRequestMessage',false)"
+                                wire:loading.attr="disabled"
+                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
+                                data-modal-hide="static-modal">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
                         <div class="">
-                            <textarea rows="4"wire:model.live="textDecline"
+                            <textarea rows="4"wire:model="messageForm.message"
                                 class="block p-2.5 w-full text-sm text-gray-900 dark:placeholder-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Escribe tus observaciones aquí..."></textarea>
-                            <x-input-error for="textDecline" />
+                                placeholder="Escribe tus observaciones aquí..." disabled></textarea>
+                            <x-input-error for="messageForm.message" />
                         </div>
                         <div class="py-2 text-right">
-                            <x-danger-button wire:click="$set('openDecline',false)" wire:loading.attr="disabled"
-                                class="mr-2">
+                            <x-danger-button wire:click="$set('openRequestMessage',false)"
+                                wire:loading.attr="disabled" class="mr-2">
                                 <i class="fa-solid fa-xmark"></i> &nbsp; Cerrar
                             </x-danger-button>
-                            <x-secondary-button type="submit" wire:loading.attr="disabled"
-                                wire:target="declineRequest" class="disabled:opacity-55">
-                                <i class="fa-solid fa-floppy-disk"></i> &nbsp; Guardar
-                            </x-secondary-button>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-@endif
-{{-- Fin Modal Deblinar Solicitud --}}
-
-{{-- Inicio Modal Seleccionar Cantidad Herramienta --}}
-@if ($openImagen)
-    <div class="jetstream-modal fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 bg-gray-900 bg-opacity-25 ">
-        <div class="pt-6">
-            <div class="max-w-lg mx-auto sm:px-6 lg:px-8 lg:py-6">
-                <div class="bg-white shadow rounded-lg p-6">
-                    <div class="flex">
-                        <p class="font-bold text-base align-middle m-0  ">
-                            Imagen de la Herramienta
-                        </p>
-                        <button type="button" wire:click="$set('openImagen',false)" wire:loading.attr="disabled"
-                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
-                            data-modal-hide="static-modal">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                    </div>
-                    @if ($imageTool->image_path)
-                        <img style="width: 390px; height: 360px; display: block; margin: 0 auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
-                            src="{{ asset('storage/' . $imageTool->image_path) }}">
-                    @else
-                        <x-label class="text-red" value="La Herramienta Selecionada No Tiene Imagen." />
-                    @endif
-
-                </div>
-            </div>
-        </div>
-    </div>
-@endif
-{{-- Fin Modal Seleccionar Cantidad Herramienta --}}
-
-{{-- Inicio Modal Mensaje Solicitud --}}
-@if ($openRequestMessage)
-    <div class="jetstream-modal fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50 bg-gray-900 bg-opacity-25 ">
-        <div class="pt-6">
-            <div class="max-w-lg mx-auto sm:px-6 lg:px-8 lg:py-6">
-                <div class="bg-white shadow rounded-lg px-6 pt-4 pb-1">
-                    <div class="flex">
-                        <p class="font-bold text-base align-middle m-0  ">
-                            Observaciones de Solicitud Rechazada: *
-                        </p>
-                        <button type="button" wire:click="$set('openRequestMessage',false)"
-                            wire:loading.attr="disabled"
-                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
-                            data-modal-hide="static-modal">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                    </div>
-                    <div class="">
-                        <textarea rows="4"wire:model="messageForm.message"
-                            class="block p-2.5 w-full text-sm text-gray-900 dark:placeholder-gray-400 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Escribe tus observaciones aquí..." disabled></textarea>
-                        <x-input-error for="messageForm.message" />
-                    </div>
-                    <div class="py-2 text-right">
-                        <x-danger-button wire:click="$set('openRequestMessage',false)" wire:loading.attr="disabled"
-                            class="mr-2">
-                            <i class="fa-solid fa-xmark"></i> &nbsp; Cerrar
-                        </x-danger-button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endif
-{{-- Fin Modal Mensaje Solicitud --}}
+    @endif
+    {{-- Fin Modal Mensaje Solicitud --}}
 </div>
