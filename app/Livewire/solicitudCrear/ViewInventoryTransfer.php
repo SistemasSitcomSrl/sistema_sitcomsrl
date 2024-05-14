@@ -46,7 +46,7 @@ class ViewInventoryTransfer extends Component
         'editForm.edit_brand' => 'Marca',
         'editForm.edit_color' => 'Modelo',
         'editForm.edit_amount' => 'Cantidad',
-        'editForm.edit_location' => 'Ubicacion',
+        'editForm.edit_location' => 'Ubicación',
         'editForm.edit_unit_measure' => 'Unidad',
         'editForm.edit_price' => 'Precio',
         'editForm.edit_image' => 'Imagen',
@@ -103,7 +103,7 @@ class ViewInventoryTransfer extends Component
         $this->editForm['edit_brand'] = $tool->brand;
         $this->editForm['edit_color'] = $tool->color;
         $this->editForm['edit_amount'] = $tool->amount;
-        $this->editForm['edit_location'] = $tool->amount;
+        $this->editForm['edit_location'] = $tool->edit_location;
         $this->editForm['edit_unit_measure'] = $tool->unit_measure;
         $this->editForm['edit_price'] = $tool->price;
         $this->editForm['select_type'] = $tool->type;
