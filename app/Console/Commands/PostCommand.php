@@ -26,10 +26,10 @@ class PostCommand extends Command
      */
     public function handle()
     {
-        Storage::deleteDirectory('public/livewire-tmp');
-        Storage::deleteDirectory('public/temp-images');
+        Storage::deleteDirectory('livewire-tmp');
+        Storage::deleteDirectory('temp-images');
 
-        Storage::makeDirectory('public/livewire-tmp');
-        Storage::makeDirectory('public/temp-images');
+        Storage::makeDirectory('livewire-tmp');
+        Storage::makeDirectory('temp-images');
     }
 }
