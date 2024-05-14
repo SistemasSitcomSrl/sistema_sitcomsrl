@@ -292,8 +292,6 @@ class ViewMovements extends Component
             ->where('movements.id_project', $this->receipt_number)
             ->where('movements.state', $this->state_receipt)
             ->where('name_equipment', 'like', '%' . $this->search . '%')  
-            ->orderBy('movements.departure_date', 'desc')        
-            ->orderBy('movements.departure_time', 'desc')   
             ->paginate($this->cant);
 
         $movements_histories = MovementHistory::select()->get();
