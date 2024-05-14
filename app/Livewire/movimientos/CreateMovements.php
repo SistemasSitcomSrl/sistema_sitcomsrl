@@ -18,7 +18,7 @@ class CreateMovements extends Component
     public $amount, $id;
     public $search = '';
     public $sort = 'id';
-    public $direction = 'asc';
+    public $direction = 'desc';
     public $cant = '13';
     public $openCreate = false;
     public $openBranch = false;

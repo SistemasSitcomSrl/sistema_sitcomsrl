@@ -82,11 +82,13 @@
                             <th>Cantidad</th>
                         </tr>
                     </thead>
-
+                    @php
+                        $j = 0;
+                    @endphp
                     <tbody>
                         @foreach ($orderInventories as $orderInventory)
                             <tr wire:key="orderInventory-{{ $orderInventory->id }}">
-                                <td>{{ $orderInventory->id }}</td>
+                                <td>{{ $j++ }}</td>
                                 <td>{{ $orderInventory->name_equipment }}</td>
                                 <td>{{ $orderInventory->unit_measure }}</td>
                                 <td>{{ $orderInventory->location }}</td>
@@ -160,133 +162,133 @@
 
         </div>
 
-        <div class="border-4  border-slate-200 w-5/12">           
-                <div class="px-2 py-2 flex items-center">
-                    <x-input class="flex-1 mx-2 text-xs" placeholder="Buscador Nombre Equipo" type="text"
-                        wire:model.live="search" />
-                </div>
+        <div class="border-4  border-slate-200 w-5/12">
+            <div class="px-2 py-2 flex items-center">
+                <x-input class="flex-1 mx-2 text-xs" placeholder="Buscador Nombre Equipo" type="text"
+                    wire:model.live="search" />
+            </div>
 
-                @if ($movements->count())
-                    <table class="table-fixed min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50 sticky top-0">
-                            <tr>
-                                <th scope="col"
-                                    class="px-1 py-1 text-left text-xs font-medium text-gray-500 tracking-wider"
-                                    wire:click="order('id')">
+            @if ($movements->count())
+                <table class="table-fixed min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50 sticky top-0">
+                        <tr>
+                            <th scope="col"
+                                class="px-1 py-1 text-left text-xs font-medium text-gray-500 tracking-wider"
+                                wire:click="order('id')">
 
-                                    @if ($sort == 'id')
-                                        @if ($direction == 'asc')
-                                            <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Nro
-                                        @else
-                                            <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Nro
-                                        @endif
+                                @if ($sort == 'id')
+                                    @if ($direction == 'asc')
+                                        <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Nro
                                     @else
-                                        <i class= "fas fa-sort ">&nbsp;</i>Nro
+                                        <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Nro
                                     @endif
+                                @else
+                                    <i class= "fas fa-sort ">&nbsp;</i>Nro
+                                @endif
 
-                                </th>
-                                <th scope="col"
-                                    class="px-1 py-1 text-left text-xs font-medium text-gray-500 tracking-wider"
-                                    wire:click="order('name_equipment')">
+                            </th>
+                            <th scope="col"
+                                class="px-1 py-1 text-left text-xs font-medium text-gray-500 tracking-wider"
+                                wire:click="order('name_equipment')">
 
-                                    @if ($sort == 'name_equipment')
-                                        @if ($direction == 'asc')
-                                            <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Nombre
-                                        @else
-                                            <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Nombre
-                                        @endif
+                                @if ($sort == 'name_equipment')
+                                    @if ($direction == 'asc')
+                                        <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Nombre
                                     @else
-                                        <i class= "fas fa-sort ">&nbsp;</i>Nombre
+                                        <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Nombre
                                     @endif
+                                @else
+                                    <i class= "fas fa-sort ">&nbsp;</i>Nombre
+                                @endif
 
-                                </th>
-                                <th scope="col"
-                                    class="px-1 py-1 text-left text-xs font-medium text-gray-500 tracking-wider"
-                                    wire:click="order('bar_Code')">
+                            </th>
+                            <th scope="col"
+                                class="px-1 py-1 text-left text-xs font-medium text-gray-500 tracking-wider"
+                                wire:click="order('bar_Code')">
 
-                                    @if ($sort == 'bar_Code')
-                                        @if ($direction == 'asc')
-                                            <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Codigo
-                                        @else
-                                            <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Codigo
-                                        @endif
+                                @if ($sort == 'bar_Code')
+                                    @if ($direction == 'asc')
+                                        <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Codigo
                                     @else
-                                        <i class= "fas fa-sort ">&nbsp;</i>Codigo
+                                        <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Codigo
                                     @endif
+                                @else
+                                    <i class= "fas fa-sort ">&nbsp;</i>Codigo
+                                @endif
 
-                                </th>
-                                <th scope="col"
-                                    class="px-1 py-1 text-center text-xs font-medium text-gray-500 tracking-wider"
-                                    wire:click="order('amount')">
+                            </th>
+                            <th scope="col"
+                                class="px-1 py-1 text-center text-xs font-medium text-gray-500 tracking-wider"
+                                wire:click="order('amount')">
 
-                                    @if ($sort == 'amount')
-                                        @if ($direction == 'asc')
-                                            <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Cantidad
-                                        @else
-                                            <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Cantidad
-                                        @endif
+                                @if ($sort == 'amount')
+                                    @if ($direction == 'asc')
+                                        <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Cantidad
                                     @else
-                                        <i class= "fas fa-sort ">&nbsp;</i>Cantidad
+                                        <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Cantidad
                                     @endif
-                                </th>
-                                <th scope="col"
-                                    class="px-1 py-1 text-center text-xs font-medium text-gray-500 tracking-wider">
-                                    Opcion
-                                </th>
+                                @else
+                                    <i class= "fas fa-sort ">&nbsp;</i>Cantidad
+                                @endif
+                            </th>
+                            <th scope="col"
+                                class="px-1 py-1 text-center text-xs font-medium text-gray-500 tracking-wider">
+                                Opcion
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach ($movements as $movement)
+                            <tr wire:key="post-{{ $movement->id }}">
+                                <td class="px-1 py-1 text-center">
+                                    <div class="text-xs text-gray-900">
+                                        {{ $movement->id }}
+                                    </div>
+                                </td>
+                                <td class="px-1 py-1">
+                                    <div class="text-xs text-gray-900">
+                                        {{ $movement->name_equipment }}
+                                    </div>
+                                </td>
+                                <td class="px-1 py-1">
+                                    <div class="text-xs text-gray-900">
+                                        {{ $movement->bar_Code }}
+                                    </div>
+                                </td>
+                                <td class="px-1 py-1">
+                                    <div class="text-xs text-center text-gray-900">
+                                        {{ $movement->amount }}
+                                    </div>
+                                </td>
+                                @if ($movement->amount == 0)
+                                    <td class="px-1 py-1 text-center items-center">
+                                        <i style="cursor:pointer;"
+                                            class="fa-solid fa-ban fa-lg text-[rgba(255,12,4,0.76)]"
+                                            @disabled(true)></i>
+                                    </td>
+                                @else
+                                    <td class="px-1 py-1 text-center items-center">
+                                        <i wire:click="editar({{ $movement->id }})" style="cursor:pointer;"
+                                            class="fa-solid fa-square-plus fa-lg "></i>
+                                    </td>
+                                @endif
+
                             </tr>
-                        </thead>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <div class="px-4 py-2 text-xs">
+                    No existe ningun registro coincidente: {{ $search }}
+                </div>
+            @endif
 
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach ($movements as $movement)
-                                <tr wire:key="post-{{ $movement->id }}">
-                                    <td class="px-1 py-1 text-center">
-                                        <div class="text-xs text-gray-900">
-                                            {{ $movement->id }}
-                                        </div>
-                                    </td>
-                                    <td class="px-1 py-1">
-                                        <div class="text-xs text-gray-900">
-                                            {{ $movement->name_equipment }}
-                                        </div>
-                                    </td>
-                                    <td class="px-1 py-1">
-                                        <div class="text-xs text-gray-900">
-                                            {{ $movement->bar_Code }}
-                                        </div>
-                                    </td>
-                                    <td class="px-1 py-1">
-                                        <div class="text-xs text-center text-gray-900">
-                                            {{ $movement->amount }}
-                                        </div>
-                                    </td>
-                                    @if ($movement->amount == 0)
-                                        <td class="px-1 py-1 text-center items-center">
-                                            <i style="cursor:pointer;"
-                                                class="fa-solid fa-ban fa-lg text-[rgba(255,12,4,0.76)]"
-                                                @disabled(true)></i>
-                                        </td>
-                                    @else
-                                        <td class="px-1 py-1 text-center items-center">
-                                            <i wire:click="editar({{ $movement->id }})" style="cursor:pointer;"
-                                                class="fa-solid fa-square-plus fa-lg "></i>
-                                        </td>
-                                    @endif
-
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @else
-                    <div class="px-4 py-2 text-xs">
-                        No existe ningun registro coincidente: {{ $search }}
-                    </div>
-                @endif
-
-                @if ($movements->hasPages(2))
-                    <div class="px-1 py-1">
-                        {{ $movements->links() }}
-                    </div>
-                @endif
+            @if ($movements->hasPages(2))
+                <div class="px-1 py-1">
+                    {{ $movements->links() }}
+                </div>
+            @endif
         </div>
     </div>
 
@@ -426,7 +428,8 @@
                                 <div class="grid grid-cols-2 gap-4 mt-1">
                                     <div>
                                         <x-label value="Cantidad Actual:" />
-                                        <x-input wire:model="inventoryEdit.amount" type="number" class="w-full" disabled/>
+                                        <x-input wire:model="inventoryEdit.amount" type="number" class="w-full"
+                                            disabled />
                                         <x-input-error for="inventoryEdit.amount" />
                                     </div>
                                     <div>
