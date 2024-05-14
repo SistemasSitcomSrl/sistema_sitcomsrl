@@ -122,8 +122,8 @@
                                                             </td>
                                                         @else
                                                             <td class="px-1 py-1.5 text-center">
-                                                                <input id="checked-checkbox1-{{ $inventory->id_movements }}"
-                                                                    name="checked-checkbox1-{{ $inventory->id_movements }}"
+                                                                <input id="checked-checkbox-{{ $inventory->id_movements }}"
+                                                                    name="checked-checkbox-{{ $inventory->id_movements }}"
                                                                     type="checkbox" value="{{ $inventory->id_movements }}"
                                                                     wire:key="{{ $checkBoxKey }}"
                                                                     wire:model.live="selectedProducts.{{ $inventory->id_movements }}"
