@@ -76,7 +76,7 @@
                                         </th>
                                         <th scope="col"
                                             class="px-1 py-1.5 text-center text-sm font-bold text-gray-900 tracking-wider">
-                                            Cantidad
+                                            Cantidades
                                         </th>
                                         <th scope="col"
                                             class="px-1 py-1.5 text-center text-sm font-bold text-gray-900 tracking-wider">
