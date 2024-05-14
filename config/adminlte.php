@@ -370,14 +370,14 @@ return [
                 ],
                 [
                     'text' => '4.2 Agregar',
-                    'route' => 'requestInventory',
+                    'route' => 'admin.request.index',
                     'icon' => 'fa-solid fa-truck-moving',
                     'can' => 'admin.request.index',
-                    'active' => ['/inventario/create'],
+                    'active' => ['/solicitud/crear'],
                 ],
                 [
                     'text' => '4.3 Dar de Baja',
-                    'route' => 'retiredInventory',
+                    'route' => 'admin.retired.index',
                     'icon' => 'fa-solid fa-box-archive',
                     'can' => 'admin.retired.index',
                     'active' => ['/retirado/crear'],
@@ -387,19 +387,19 @@ return [
                     'route' => 'admin.movement.index',
                     'icon' => 'fas fa-fw fa-dolly',
                     'can' => 'admin.movement.index',
-                    'active' => ['/movimiento/create'],
+                    'active' => ['/prestar/crear'],
                 ],
                 [
                     'text' => '4.5 Transf. Enviadas',
-                    'route' => 'transfer-sent',
+                    'route' => 'admin.transfer-sent.index',
                     'icon' => 'fa-solid fa-arrow-right',
                     'can' => 'admin.transfer-sent.index',
-                    'active' => ['/transferencia/Crear'],
+                    'active' => ['/enviadas/Crear'],
 
                 ],
                 [
                     'text' => '4.6 Transf. Recibidas',
-                    'route' => 'transfer',
+                    'route' => 'admin.transfer-received.index',
                     'icon' => 'fa-solid fa-arrow-left',
                     'can' => 'admin.transfer-receive.index',
                 ],
@@ -413,9 +413,9 @@ return [
             'submenu' => [
                 [
                     'text' => '5.1 Inventario',
-                    'route' => 'admin.inventory_activo.index',
+                    'route' => 'admin.inventory_asset.index',
                     'icon' => 'fa-solid fa-screwdriver-wrench',
-                    'can' => 'admin.inventory.index',
+                    'can' => 'admin.inventory.index_activo',
                 ],
                 [
                     'text' => '5.2 Personal',
@@ -425,16 +425,16 @@ return [
                 ],
                 [
                     'text' => '5.3 Agregar',
-                    'route' => 'admin.request.index',
+                    'route' => 'admin.request_asset.index',
                     'icon' => 'fa-solid fa-truck-moving',
-                    'can' => 'admin.request.index',
-                    'active' => ['/inventario/create'],
+                    'can' => 'admin.request.index_activo',
+                    'active' => ['/solicitud/crear'],
                 ],
                 [
                     'text' => '5.4 Dar de Baja',
-                    'route' => 'admin.retired.index',
+                    'route' => 'admin.retired_asset.index',
                     'icon' => 'fa-solid fa-box-archive',
-                    'can' => 'admin.retired.index',
+                    'can' => 'admin.retired.index_activo',
                     'active' => ['/retirado/crear'],
                 ],
                 [

@@ -5,10 +5,8 @@ namespace App\Livewire\SolicitudCrear;
 use App\Models\Branch;
 use App\Models\Inventory;
 use App\Models\TransfersInventories;
-
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 
@@ -306,7 +304,15 @@ class CreateInventory extends Component
                 ]);
             }
             $this->dispatch('alert', 'Creado con Exito');
-            return redirect('solicitud');
+            
+            $rol = Auth::user()->roles->first()->name ?? 'default';
+
+            switch ($rol) {
+                case 'Encargado de Almacen':
+                    return redirect('solicitud');
+                case 'Encargado de Activo':
+                    return redirect('solicitud_activo');
+            }
 
         } else {
             $this->dispatch('alert2', 'Seleccione una Herramienta');
@@ -362,7 +368,14 @@ class CreateInventory extends Component
     }
     public function returnShow_movements()
     {
-        return redirect('solicitud');
+        $rol = Auth::user()->roles->first()->name ?? 'default';
+
+        switch ($rol) {
+            case 'Encargado de Almacen':
+                return redirect('solicitud');
+            case 'Encargado de Activo':
+                return redirect('solicitud_activo');
+        }
     }
     public function updatingSearch()
     {

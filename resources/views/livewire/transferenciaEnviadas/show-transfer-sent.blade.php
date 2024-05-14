@@ -20,7 +20,7 @@
                     wire:model.live="search" />
 
                 @can('admin.transfer-sent.create')
-                    <a href="{{ Route('createTransfer') }}">
+                    <a href="{{ Route('admin.transfer-sent.create') }}">
                         <x-secondary-button >
                             <i class="fa-solid fa-plus"></i> &nbsp;Transferir Herramienta
                         </x-secondary-button>
@@ -207,7 +207,7 @@
                                     @can('admin.transfer-sent.pdf')
                                         <div class="pl-1">
 
-                                            <form method="POST" action="{{ route('downloadTransferSent') }}">
+                                            <form method="POST" action="{{ route('admin.transfer-sent.download') }}">
                                                 @csrf
                                                 <div>
                                                     <button type="submit" value="{{ $movement->receipt_number }}"

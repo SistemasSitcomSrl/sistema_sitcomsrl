@@ -17,7 +17,7 @@
                     <div class="bg-white  rounded-lg ">
                         <div class="flex pt-3">
                             <h3 class="font-bold text-base align-middle m-0 px-3">
-                                Lista de Movimientos de {{$name_project}}
+                                Lista de Movimientos de {{ $name_project }}
                             </h3>
                             <button type="button" style="cursor:pointer;" wire:click="close()"
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
@@ -101,7 +101,8 @@
                                 @endphp
                                 <tbody class="divide-y divide-gray-200 border-y">
                                     @foreach ($inventories as $inventory)
-                                        <tr class="bg-stone-100" wire:key="inventory-{{ $inventory->id_inventory }}">
+                                        <tr class="bg-stone-100"
+                                            wire:key="inventory-{{ $inventory->id_inventory }}- {{ $inventory->receipt_number }}">
                                             @can('admin.movement.edit')
                                                 @php
                                                     $time = App\Models\MovementHistory::where(

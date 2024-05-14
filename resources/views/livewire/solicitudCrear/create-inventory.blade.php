@@ -225,9 +225,6 @@
                                             {{ $movement->name_equipment }}
                                         </div>
                                     </td>
-
-
-
                                     <td class="px-1 py-1">
                                         <div class="text-xs text-gray-900">
                                             {{ $movement->bar_Code }}

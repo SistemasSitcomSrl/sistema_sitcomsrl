@@ -156,151 +156,175 @@
         <div class="receipt-number">
             @foreach ($movements as $movement)
                 Nro: {{ $movement->receipt_number }}
-            @break
-        @endforeach
+                @switch($state_create)
+                    @case(0)
+                        (Pendiente)
+                    @break
+
+                    @case(1)
+                        (Completado)
+                    @break
+
+                    @case(3)
+                        (Rechazado)
+                    @break
+
+                    @case(4)
+                        (Corregido)
+                    @break
+
+                    @case(5)
+                        (En Espera)
+                    @break
+                @endswitch
+
+                @php
+                    break;
+                @endphp
+            @endforeach
+        </div>
+        <div class="logo-container">
+            <img class="logo" src="{{ asset('img/logo.png') }}" alt="Logo de la empresa">
+            <div class="company-info">
+                @foreach ($movements as $movement)
+                    <p>Dir. {{ $movement->branch_direction }}</p>
+                    <p>Tel(s). 3 326 0654 - Cel. 74604441</p>
+                    <p>{{ $movement->branch_direction }}</p>
+                @break
+            @endforeach
+
+        </div>
     </div>
-    <div class="logo-container">
-        <img class="logo" src="{{ asset('img/logo.png') }}" alt="Logo de la empresa">
-        <div class="company-info">
+
+    <div class="customer-info">
+        <table>
+            <tr>
+                <th style="text-align: center; font-size: 12px;" colspan="6">Datos del Proyecto</th>
+            </tr>
             @foreach ($movements as $movement)
-                <p>Dir. {{ $movement->branch_direction }}</p>
-                <p>Tel(s). 3 326 0654 - Cel. 74604441</p>
-                <p>{{ $movement->branch_direction }}</p>
+                <tr>
+                    <th style="text-align: right;">Nombre:</th>
+                    <td>{{ $movement->name }}</td>
+                    <th style="text-align: right;">Cargo:</th>
+                    <td>{{ $movement->company_position }}</td>
+                    <th style="text-align: right;">Fecha:</th>
+                    <td>{{ $movement->departure_date }}</td>
+                </tr>
+                <tr>
+                    <th style="text-align: right;">Proyecto:</th>
+                    <td>{{ $movement->object }}</td>
+                    <th style="text-align: right;">Entidad:</th>
+                    <td>{{ $movement->entity }}</td>
+                    <th style="text-align: right;">Ciudad:</th>
+                    <td>{{ $movement->ubi_entity }}</td>
+                </tr>
             @break
         @endforeach
-
-    </div>
-</div>
-
-<div class="customer-info">
-    <table>
-        <tr>
-            <th style="text-align: center; font-size: 12px;" colspan="6">Datos del Proyecto</th>
-        </tr>
-        @foreach ($movements as $movement)
-            <tr>
-                <th style="text-align: right;">Nombre:</th>
-                <td>{{ $movement->name }}</td>
-                <th style="text-align: right;">Cargo:</th>
-                <td>{{ $movement->company_position }}</td>
-                <th style="text-align: right;">Fecha:</th>
-                <td>{{ $movement->departure_date }}</td>
-            </tr>
-            <tr>
-                <th style="text-align: right;">Proyecto:</th>
-                <td>{{ $movement->object }}</td>
-                <th style="text-align: right;">Entidad:</th>
-                <td>{{ $movement->entity }}</td>
-                <th style="text-align: right;">Ciudad:</th>
-                <td>{{ $movement->ubi_entity }}</td>
-            </tr>
-        @break
-    @endforeach
-</table>
+    </table>
 </div>
 <table>
-<tr>
-    <th style="text-align: center; font-size: 12px;" colspan="10">Detalles de los Equipos</th>
-</tr>
-<tr>
-    <th>Nro</th>
-    <th>Nombre</th>
-    <th style=" text-align: center;">Codigo</th>
-    <th>Unidad</th>
-    <th>Tipo</th>
-    <th style="text-align: center;">Precio(Bs)</th>
-    <th style=" text-align: center;">Cantidad</th>
-    <th style=" text-align: center;">Devuelto</th>
-    <th>Categoria</th>
-    <th style=" text-align: center;">Fecha</th>
-</tr>
-
-
-{{ $counter = 1 }}
-
-@foreach ($movements as $movement)
-    <tr style=" background-color: #d7dbdd37;">
-        <td style="text-align: center; font-weight: bold;">{{ $counter++ }}</td>
-        <td style="font-weight: bold;">{{ $movement->name_equipment }}</td>
-        <td style=" text-align: center; font-weight: bold;">{{ $movement->bar_Code }}</td>
-        <td style="font-weight: bold;">{{ $movement->unit_measure }}</td>
-        <td style="font-weight: bold;">{{ $movement->type }}</td>
-        <td style="text-align: center; font-weight: bold;">{{ $movement->price }}</td>
-        <td style=" text-align: center; font-weight: bold;">{{ $movement->missing_amount }}</td>
-        <td style=" text-align: center; font-weight: bold; color:red">{{ $movement->return_amount }}</td>
-        <td style=" text-align: center; font-weight: bold;">-</td>
-        <td style=" text-align: center; font-weight: bold;">-</td>
+    <tr>
+        <th style="text-align: center; font-size: 12px;" colspan="10">Detalles de los Equipos</th>
     </tr>
-    @php
-        $i = 1;
-    @endphp
-    @foreach ($movements_histories as $record)
-        @if ($movement->id_movements == $record->id_movements)
-            <tr>
-                <td style=" text-align: center;">-
-                </td>
-                <td class="px-1 py-1 text-left">Devolución
-                    #{{ $i++ }}
-                </td>
-                <td style="text-align: center;">-
-                </td>
-                <td style="text-align: center;">-
-                </td>
-                <td style="text-align: center;">-
-                </td>
-                <td style="text-align: center;">-
-                </td>
-                <td style="text-align: center;">-
-                </td>
-                <td style="text-align: center;">
-                    <div class="text-sm text-gray-900">
-                        {{ $record->return_amount }}
-                    </div>
-                </td>
-                <td style="text-align: center;">
-                    <div class="text-sm text-gray-900">
-                        {{ $record->category }}
-                    </div>
-                </td>
-                <td style="text-align: center;">
-                    <div class="text-sm text-gray-900">
-                        {{ date('d-M', strtotime($record->return_time)) }}
-                        {{ date('H:i', strtotime($record->return_time)) }}
-                    </div>
-                </td>
-            </tr>
-        @endif
+    <tr>
+        <th>Nro</th>
+        <th>Nombre</th>
+        <th style=" text-align: center;">Codigo</th>
+        <th>Unidad</th>
+        <th>Tipo</th>
+        <th style="text-align: center;">Precio(Bs)</th>
+        <th style=" text-align: center;">Cantidad</th>
+        <th style=" text-align: center;">Devuelto</th>
+        <th>Categoria</th>
+        <th style=" text-align: center;">Fecha</th>
+    </tr>
+
+
+    {{ $counter = 1 }}
+
+    @foreach ($movements as $movement)
+        <tr style=" background-color: #d7dbdd37;">
+            <td style="text-align: center; font-weight: bold;">{{ $counter++ }}</td>
+            <td style="font-weight: bold;">{{ $movement->name_equipment }}</td>
+            <td style=" text-align: center; font-weight: bold;">{{ $movement->bar_Code }}</td>
+            <td style="font-weight: bold;">{{ $movement->unit_measure }}</td>
+            <td style="font-weight: bold;">{{ $movement->type }}</td>
+            <td style="text-align: center; font-weight: bold;">{{ $movement->price }}</td>
+            <td style=" text-align: center; font-weight: bold;">{{ $movement->missing_amount }}</td>
+            <td style=" text-align: center; font-weight: bold; color:red">{{ $movement->return_amount }}</td>
+            <td style=" text-align: center; font-weight: bold;">-</td>
+            <td style=" text-align: center; font-weight: bold;">-</td>
+        </tr>
+        @php
+            $i = 1;
+        @endphp
+        @foreach ($movements_histories as $record)
+            @if ($movement->id_movements == $record->id_movements)
+                <tr>
+                    <td style=" text-align: center;">-
+                    </td>
+                    <td class="px-1 py-1 text-left">Devolución
+                        #{{ $i++ }}
+                    </td>
+                    <td style="text-align: center;">-
+                    </td>
+                    <td style="text-align: center;">-
+                    </td>
+                    <td style="text-align: center;">-
+                    </td>
+                    <td style="text-align: center;">-
+                    </td>
+                    <td style="text-align: center;">-
+                    </td>
+                    <td style="text-align: center;">
+                        <div class="text-sm text-gray-900">
+                            {{ $record->return_amount }}
+                        </div>
+                    </td>
+                    <td style="text-align: center;">
+                        <div class="text-sm text-gray-900">
+                            {{ $record->category }}
+                        </div>
+                    </td>
+                    <td style="text-align: center;">
+                        <div class="text-sm text-gray-900">
+                            {{ date('d-M', strtotime($record->return_time)) }}
+                            {{ date('H:i', strtotime($record->return_time)) }}
+                        </div>
+                    </td>
+                </tr>
+            @endif
+        @endforeach
     @endforeach
-@endforeach
 
 </table>
 <div>
-<label style="font-weight: bold">Nota:</label>
-<label for="">El presente compromiso aplica para el uso correcto de los equipos o heramientas
-    prestadas.</label>
-<br>
-<label style="font-weight: bold;">FIRMA DE QUIEN RECIBE LOS EQUIPOS O HERRAMIENTAS:</label>
+    <label style="font-weight: bold">Nota:</label>
+    <label for="">El presente compromiso aplica para el uso correcto de los equipos o heramientas
+        prestadas.</label>
+    <br>
+    <label style="font-weight: bold;">FIRMA DE QUIEN RECIBE LOS EQUIPOS O HERRAMIENTAS:</label>
 </div>
 <br><br><br><br><br><br>
 </div>
 <div class="signature-fields">
 @foreach ($movements as $movement)
 <div class="signature-column">
-<div class="signature-container">
+    <div class="signature-container">
 
-    <label>________________________</label>
-    <label>{{ $movement->manager_name }}</label>
-    <label>{{ $movement->manager_company_position }}</label>
-</div>
+        <label>________________________</label>
+        <label>{{ $movement->manager_name }}</label>
+        <label>{{ $movement->manager_company_position }}</label>
+    </div>
 </div>
 @break
 @endforeach
 @foreach ($movements as $movement)
 <div class="signature-column">
 <div class="signature-container">
-<label>________________________</label>
-<label>{{ $movement->name }}</label>
-<label>{{ $movement->company_position }}</label>
+    <label>________________________</label>
+    <label>{{ $movement->name }}</label>
+    <label>{{ $movement->company_position }}</label>
 </div>
 </div>
 @break

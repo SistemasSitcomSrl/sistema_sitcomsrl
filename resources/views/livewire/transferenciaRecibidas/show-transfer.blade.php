@@ -200,7 +200,7 @@
                                     @endcan
                                     @can('admin.transfer-receive.pdf')
                                         <div class="pl-1">
-                                            <form method="POST" action="{{ route('downloadTransferSent') }}">
+                                            <form method="POST" action="{{ route('admin.transfer-received.download') }}">
                                                 @csrf
                                                 <div>
                                                     <button type="submit" value="{{ $movement->receipt_number }}"

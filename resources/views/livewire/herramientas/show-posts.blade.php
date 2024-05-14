@@ -26,7 +26,7 @@
                 <input id="searchInput" placeholder="Buscador Nombre Equipo" type="text" value=""
                     wire:model.live="search" wire:key="{{ $searchKey }}"
                     class="flex-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                <form class="flex items-center pl-1 " method="POST" action="{{ route('downloadInventory') }}">
+                <form class="flex items-center pl-1 " method="POST" action="{{ route('admin.inventory.download') }}">
                     @csrf
 
                     @can('admin.inventory.select')

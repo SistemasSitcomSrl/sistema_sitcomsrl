@@ -20,7 +20,7 @@
                 <x-input class="flex-1 mx-2" placeholder="Buscador Numero de Solicitud" type="text"
                     wire:model.live="search" />
                 @can('admin.retired.create')
-                    <a href="{{ Route('createRetired') }}">
+                    <a href="{{ Route('admin.retired.create') }}">
                         <x-secondary-button>
                             <i class="fa-solid fa-plus"></i> &nbsp;Crear Solictud
                         </x-secondary-button>
@@ -193,7 +193,7 @@
                                     @can('admin.retired.see')
                                         @if ($movement->state == 1)
                                             <div class="pl-1">
-                                                <form method="POST" action="{{ route('downloadInventoryRetired') }}">
+                                                <form method="POST" action="{{ route('admin.retired.download') }}">
                                                     @csrf
                                                     <div>
                                                         <button type="submit" value="{{ $movement->receipt_number }}"

@@ -76,7 +76,7 @@ class CreateTransfers extends Component
 
     public function returnShow_movements()
     {
-        return redirect('/enviado');
+        return redirect('/enviadas');
     }
     //Crear Recibo en Base de Datos
     public function create()
@@ -128,7 +128,7 @@ class CreateTransfers extends Component
                 }
 
                 $this->dispatch('alert', 'Creado con Exito');
-                return redirect('/enviado');
+                return redirect('/enviadas');
             } else {
                 $this->dispatch('alert2', 'Seleccione una Sucursal');
             }

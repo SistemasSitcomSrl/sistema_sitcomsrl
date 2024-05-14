@@ -82,7 +82,7 @@ class CreateMovements extends Component
     //Retornar a la anterior vista
     public function returnShow_movements()
     {
-        return redirect('movimiento');
+        return redirect('prestar');
     }
     //Crear Recibo en Base de Datos
     public function create()
@@ -132,7 +132,7 @@ class CreateMovements extends Component
                 }
 
                 $this->dispatch('alert', 'Creado con Exito');
-                return redirect('movimiento');
+                return redirect('prestar');
             } else {
                 $this->dispatch('alert2', 'Seleccione un Proyecto');
             }
