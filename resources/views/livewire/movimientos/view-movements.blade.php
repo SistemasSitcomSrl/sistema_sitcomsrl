@@ -122,8 +122,8 @@
                                                             </td>
                                                         @else
                                                             <td class="px-1 py-1.5 text-center">
-                                                                <input id="checked-checkbox-{{ $inventory->id_movements }}"
-                                                                    name="checked-checkbox-{{ $inventory->id_movements }}"
+                                                                <input id="checked-checkbox1-{{ $inventory->id_movements }}"
+                                                                    name="checked-checkbox1-{{ $inventory->id_movements }}"
                                                                     type="checkbox" value="{{ $inventory->id_movements }}"
                                                                     wire:key="{{ $checkBoxKey }}"
                                                                     wire:model.live="selectedProducts.{{ $inventory->id_movements }}"
@@ -227,7 +227,7 @@
 
                                         @foreach ($movements_histories as $record)
                                             @if ($inventory->id_movements == $record->id_movements)
-                                                <tr wire:key="movements-{{ $inventory->id_movements }}-{{ $inventory->receipt_number }}">
+                                                <tr wire:key="movements-{{ $record->id_movements }}">
                                                     @can('admin.movement.edit')
                                                         <td class="px-1 py-1.5 text-center">
                                                         </td>
@@ -266,7 +266,7 @@
                                             @endif
                                         @endforeach
                                         @if (array_search($inventory->id_movements, array_keys($selectedProducts)))
-                                            <tr class="bg-emerald-100" wire:key="movements-{{ $inventory->id_movements }}-{{ $inventory->receipt_number }}">
+                                            <tr class="bg-emerald-100">
                                                 @can('admin.movement.edit')
                                                     <td class="px-1 py-1.5 text-center">
                                                     </td>
