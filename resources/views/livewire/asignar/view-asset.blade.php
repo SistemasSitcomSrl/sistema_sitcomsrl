@@ -17,7 +17,7 @@
                     <div class="bg-white  rounded-lg ">
                         <div class="flex pt-3">
                             <h3 class="font-bold text-base align-middle m-0 px-3">
-                                Lista de Asignación del Numero de Carnet: {{$name_worker}}
+                                Lista de Asignación del Numero de Carnet: {{ $name_worker }}
                             </h3>
                             <button type="button" style="cursor:pointer;" wire:click="close()"
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center  dark:hover:bg-gray-400 dark:hover:text-red"
@@ -42,8 +42,8 @@
                                 </select>
                                 <span>Entradas</span>
                             </div>
-                            <x-input class="flex-1 mx-1  text-sm" placeholder="Buscador Nombre Activo"
-                                type="text" wire:model.live="search" />
+                            <x-input class="flex-1 mx-1  text-sm" placeholder="Buscador Nombre Activo" type="text"
+                                wire:model.live="search" />
                         </div>
                         @if ($inventories->count())
                             <table class="table-fixed min-w-full  divide-gray-00 py-2">
@@ -97,7 +97,8 @@
                                 @endphp
                                 <tbody class="divide-y divide-gray-200 border-y">
                                     @foreach ($inventories as $inventory)
-                                        <tr class="bg-stone-100" wire:key="inventory-{{ $inventory->id_inventory }}-{{ $inventory->receipt_number }}">
+                                        <tr class="bg-stone-100"
+                                            wire:key="inventory-{{ $inventory->id_inventory }}-{{ $inventory->receipt_number }}">
                                             @can('admin.assign.edit')
                                                 @php
                                                     $time = App\Models\AssetHistory::where(
@@ -201,9 +202,15 @@
                                                 </div>
                                             </td>
                                             <td class="px-3 py-1.5 text-center">
-                                                <div class="text-sm text-red font-bold ">
-                                                    {{ $inventory->return_amount }}
-                                                </div>
+                                                @if ($inventory->missing_amount == $inventory->return_amount)
+                                                    <div class="text-sm text-green font-bold ">
+                                                        {{ $inventory->return_amount }}
+                                                    </div>
+                                                @else
+                                                    <div class="text-sm text-red font-bold ">
+                                                        {{ $inventory->return_amount }}
+                                                    </div>
+                                                @endif
                                             </td>
                                             <td class="px-1 py-1.5 text-center font-bold">
                                                 -

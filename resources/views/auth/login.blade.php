@@ -16,12 +16,12 @@
             @csrf
 
             <div>
-                <x-label for="ci" value="{{ __('Carnet de Identidad') }}" />
+                <x-label for="ci" value="{{ __('Carnet de Identidad:') }}" />
                 <x-input id="ci" class="block mt-1 w-full" type="text" name="ci" :value="old('ci')" required/>
             </div>
 
             <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
+                <x-label for="password" value="{{ __('Contraseña:') }}" />
                 <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             </div>
 

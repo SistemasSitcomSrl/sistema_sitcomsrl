@@ -251,7 +251,13 @@
             <td style="font-weight: bold;">{{ $movement->type }}</td>
             <td style="text-align: center; font-weight: bold;">{{ $movement->price }}</td>
             <td style=" text-align: center; font-weight: bold;">{{ $movement->missing_amount }}</td>
-            <td style=" text-align: center; font-weight: bold; color:red">{{ $movement->return_amount }}</td>
+            @if ($movement->missing_amount == $movement->return_amount)
+                <td style=" text-align: center; font-weight: bold; color:green">{{ $movement->return_amount }}
+                </td>
+            @else
+                <td style=" text-align: center; font-weight: bold; color:red">{{ $movement->return_amount }}
+                </td>
+            @endif
             <td style=" text-align: center; font-weight: bold;">-</td>
             <td style=" text-align: center; font-weight: bold;">-</td>
         </tr>

@@ -205,9 +205,15 @@
                                                 </div>
                                             </td>
                                             <td class="px-3 py-1.5 text-center">
-                                                <div class="text-sm text-red font-bold ">
-                                                    {{ $inventory->return_amount }}
-                                                </div>
+                                                @if ($inventory->missing_amount == $inventory->return_amount)
+                                                    <div class="text-sm text-green font-bold ">
+                                                        {{ $inventory->return_amount }}
+                                                    </div>
+                                                @else
+                                                    <div class="text-sm text-red font-bold ">
+                                                        {{ $inventory->return_amount }}
+                                                    </div>
+                                                @endif
                                             </td>
                                             <td class="px-3 py-1.5 text-center font-bold">
                                                 -

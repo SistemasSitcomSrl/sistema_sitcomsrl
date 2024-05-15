@@ -14,6 +14,7 @@ class RoleSeeder extends Seeder
         $admin = Role::create(['name' => 'Administrador']);
         $almacen = Role::create(['name' => 'Encargado de Almacen']);
         $activo = Role::create(['name' => 'Encargado de Activo']);
+        $agente_servicio = Role::create(['name' => 'Agente de Servicio']);
 
         //Inicio Lista
         Permission::create([
