@@ -227,9 +227,9 @@
         <th>Nro</th>
         <th>Nombre</th>
         <th style=" text-align: center;">Codigo</th>
-        <th>Marca</th>      
+        <th>Marca</th>
         <th>Unidad</th>
-        <th style=" text-align: center;">Tipo</th>        
+        <th style=" text-align: center;">Tipo</th>
         <th style="text-align: center;">Precio(Bs)</th>
         <th style=" text-align: center;">Cantidad</th>
         <th style=" text-align: center;">Devuelto</th>
@@ -244,14 +244,21 @@
             <td style="text-align: center; font-weight: bold;">{{ $counter++ }}</td>
             <td style="font-weight: bold;">{{ $movement->name_equipment }}</td>
             <td style=" text-align: center; font-weight: bold;">{{ $movement->bar_Code }}</td>
-            <td style="font-weight: bold;">{{ $movement->brand }}</td>          
+            <td style="font-weight: bold;">{{ $movement->brand }}</td>
             <td style="font-weight: bold;">{{ $movement->unit_measure }}</td>
             <td style=" text-align: center; font-weight: bold;">{{ $movement->type }}</td>
             <td style="text-align: center; font-weight: bold;">{{ $movement->price }}</td>
             <td style=" text-align: center; font-weight: bold;">{{ $movement->missing_amount }}</td>
-            <td style=" text-align: center; font-weight: bold; color:red">
-                {{ $movement->return_amount }}</td>
-            <td style=" text-align: center; font-weight: bold;">-</td>
+            @if ($movement->missing_amount == $movement->return_amount)
+                <td style=" text-align: center; font-weight: bold; color:green">
+                    {{ $movement->return_amount }}</td>
+                <td style=" text-align: center; font-weight: bold;">-</td>
+            @else
+                <td style=" text-align: center; font-weight: bold; color:red">
+                    {{ $movement->return_amount }}</td>
+                <td style=" text-align: center; font-weight: bold;">-</td>
+            @endif
+
         </tr>
 
         @php
