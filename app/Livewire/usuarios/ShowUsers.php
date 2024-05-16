@@ -146,7 +146,7 @@ class ShowUsers extends Component
                 'users.phone_number',
                 'roles.name as name_role',
                 'users.state',
-                DB::raw('COALESCE(branches.name, "Sin Sucursal") as name_branch')
+                DB::raw('COALESCE(branches.name, "-") as name_branch')
             )  // Uso de COALESCE
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->cant);
