@@ -23,6 +23,7 @@ class ShowPosts extends Component
     public $postEditId = '';
     public $cant = '10';
     public $rutaActual;
+    public $stateInput = true;
     public $selectBranch;
     public $create_image, $update_image;
     public $imageTool = false;
@@ -51,6 +52,14 @@ class ShowPosts extends Component
         'destroy',
     ];
     protected $validationAttributes = [
+        'postForm.name_equipment' => 'nombre',
+        'postForm.bar_Code' => 'código',
+        'postForm.brand' => 'marca',
+        'postForm.color' => 'modelo',
+        'postForm.amount' => 'cantidad',
+        'postForm.location' => 'ubicación',
+        'postForm.unit_measure' => 'unidad',
+        'postForm.price' => 'precio',
         'update_image' => 'imagen',
     ];
     public function edit($postId)
@@ -70,14 +79,56 @@ class ShowPosts extends Component
         $this->postForm['price'] = $post->price;
         $this->postForm['type'] = $post->type;
         $this->imageTool = $post->image_path;
+
+        //Validar si el usuario es administrador para poder editar el campo de sucursal
+        $rol = Auth::user()->roles->pluck('name')->first();
+        if ($rol == 'Administrador') {
+            $this->stateInput = false;
+        }
     }
     public function update()
     {
-        $this->validate([
-            'update_image' => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
+        if ($this->update_image) {
+            $this->validate([
+                'postForm.name_equipment' => 'required|max:50',
+                'postForm.bar_Code' => 'numeric|required|min:1|max:999999999999',
+                'postForm.brand' => 'required|max:50',
+                'postForm.color' => 'required|max:30',
+                'postForm.amount' => 'numeric|required|min:1|max:999',
+                'postForm.location' => 'required|max:10',
+                'postForm.unit_measure' => 'required|max:10',
+                'postForm.price' => 'numeric|required|min:1|max:999999',
+                'postForm.type' => 'required',
+                'update_image' => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+            ]);
+        } else {
+            $this->validate([
+                'postForm.name_equipment' => 'required|max:50',
+                'postForm.bar_Code' => 'numeric|required|min:1|max:999999999999',
+                'postForm.brand' => 'required|max:50',
+                'postForm.color' => 'required|max:30',
+                'postForm.amount' => 'numeric|required|min:1|max:999',
+                'postForm.location' => 'required|max:10',
+                'postForm.unit_measure' => 'required|max:10',
+                'postForm.price' => 'numeric|required|min:1|max:999999',
+                'postForm.type' => 'required',
+
+            ]);
+        }
 
         $post = Inventory::find($this->postEditId);
+        $post->name_equipment = $this->postForm['name_equipment'];
+        $post->bar_Code = $this->postForm['bar_Code'];
+        $post->brand = $this->postForm['brand'];
+        $post->color = $this->postForm['color'];
+        $post->amount = $this->postForm['amount'];
+        $post->location = $this->postForm['location'];
+        $post->unit_measure = $this->postForm['unit_measure'];
+        $post->price = $this->postForm['price'];
+        $post->type = $this->postForm['type'];
+        $post->save();
+
         if ($this->update_image) {
             if ($post->image_path) {
                 Storage::delete($post->image_path);
@@ -136,7 +187,11 @@ class ShowPosts extends Component
 
         // En caso de que no haya sucursal, se asigna el valor de "Todas las Sucursales"
         if ($branch_name == null) {
-            $branch_name = "Todas las Sucursales";
+            if ($rutaActual == 'admin.inventory_asset.index') {
+                $branch_name = "Activo Fijo";               
+            } else {
+                $branch_name = "Todas las Sucursales";
+            }
         }
 
         $this->postForm['select'] = $branch_id = Branch::where('user_id', Auth::user()->id)->value('id');

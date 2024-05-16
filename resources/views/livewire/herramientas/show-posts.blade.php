@@ -282,65 +282,71 @@
                                     <div>
                                         <x-label value="Nombre de Equipo:" />
                                         <x-input wire:model="postForm.name_equipment" type="text" class="w-full"
-                                            disabled />
+                                            disabled="{{ $stateInput }}" />
+                                        <x-input-error for="postForm.name_equipment" />
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 mt-1">
                                     <div>
                                         <x-label value="Precio:" />
                                         <x-input wire:model="postForm.price" type="number" class="w-full"
-                                            disabled />
+                                            disabled="{{ $stateInput }}" />
+                                        <x-input-error for="postForm.price" />
                                     </div>
                                     <div>
                                         <x-label value="Marca:" />
                                         <x-input wire:model="postForm.brand" type="text" class="w-full"
-                                            disabled />
+                                            disabled="{{ $stateInput }}" />
+                                        <x-input-error for="postForm.brand" />
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 mt-1">
                                     <div>
                                         <x-label value="Modelo:" />
                                         <x-input wire:model="postForm.color" type="text" class="w-full"
-                                            disabled />
+                                            disabled="{{ $stateInput }}" />
+                                        <x-input-error for="postForm.color" />
                                     </div>
                                     <div>
                                         <x-label value="Cantidad:" />
                                         <x-input wire:model="postForm.amount" type="number" class="w-full"
-                                            disabled />
+                                            disabled="{{ $stateInput }}" />
+                                        <x-input-error for="postForm.amount" />
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 mt-1">
                                     <div>
                                         <x-label value="Ubicación:" />
                                         <x-input wire:model="postForm.location" type="text" class="w-full"
-                                            disabled />
+                                            disabled="{{ $stateInput }}" />
+                                        <x-input-error for="postForm.location" />
                                     </div>
                                     <div>
                                         <x-label value="Unidad medida:" />
                                         <x-input wire:model="postForm.unit_measure" type="text" class="w-full"
-                                            disabled />
+                                            disabled="{{ $stateInput }}" />
+                                        <x-input-error for="postForm.unit_measure" />
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 mt-1">
                                     <div>
                                         <x-label value="Codigo de Barra:" />
                                         <x-input wire:model="postForm.bar_Code" type="text" class="w-full"
-                                            disabled />
+                                            disabled="{{ $stateInput }}" />
+                                        <x-input-error for="postForm.bar_Code" />
                                     </div>
                                     <div>
                                         <x-label value="Tipo de Equipo:" />
                                         <select wire:model="postForm.type"
                                             class="bg-white-50 border border-gray-500 text-gray-600 rounded-lg text-base focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                            disabled>
-
-                                            
-                                            <option value="" disabled selected>Seleccione Tipo</option>
-                                            <option value="activo">Activo Fijo
-                                            </option>
-                                            <option value="herramienta">Herramienta
-                                            </option>
-                                            <option value="material">Material
-                                            </option>
+                                            disabled="{{ $stateInput }}" />
+                                        <option value="" disabled selected>Seleccione Tipo</option>
+                                        <option value="activo">Activo Fijo
+                                        </option>
+                                        <option value="herramienta">Herramienta
+                                        </option>
+                                        <option value="material">Material
+                                        </option>
                                         </select>
                                         <x-input-error for="postForm.type" />
                                     </div>
@@ -362,22 +368,37 @@
                                     </div>
                                 @endif
                                 @can('admin.inventory.image')
-                                    <div class="row-span-1 ">
-                                        <label for="uploadFile1"
-                                            class="bg-gray-800 hover:bg-gray-700 text-white text-sm px-4 py-1.5 outline-none rounded w-max cursor-pointer mx-auto block font-[sans-serif]">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 mr-2 fill-white inline"
-                                                viewBox="0 0 32 32">
-                                                <path
-                                                    d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
-                                                    data-original="#000000" />
-                                                <path
-                                                    d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z"
-                                                    data-original="#000000" />
-                                            </svg>
-                                            Actualizar Imagen
-                                            <input type="file" accept="image/*" wire:model.live="update_image"
-                                                id='uploadFile1' class="hidden" />
-                                        </label>
+                                    <div class="row-span-1 pl-7">
+                                        <div x-data="{ uploading: false, progress: 0 }" x-on:livewire-upload-start="uploading = true"
+                                            x-on:livewire-upload-finish="uploading = false"
+                                            x-on:livewire-upload-cancel="uploading = false"
+                                            x-on:livewire-upload-error="uploading = false"
+                                            x-on:livewire-upload-progress="progress = $event.detail.progress">
+                                            <div class="pb-1  mx-3 text-center" x-show="uploading">
+                                                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                                                    <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                                                        style="width: 100%">
+                                                        <div x-text="progress">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label for="uploadFile1"
+                                                class=" bg-gray-800 hover:bg-gray-700 text-white text-sm px-4 py-1.5 outline-none rounded w-max cursor-pointer mx-auto block font-[sans-serif]">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 mr-2 fill-white inline"
+                                                    viewBox="0 0 32 32">
+                                                    <path
+                                                        d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
+                                                        data-original="#000000" />
+                                                    <path
+                                                        d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z"
+                                                        data-original="#000000" />
+                                                </svg>
+                                                Actualizar Imagen
+                                                <input type="file" accept="image/*" wire:model.live="update_image"
+                                                    id='uploadFile1' class="hidden" />
+                                            </label>
+                                        </div>
                                     </div>
                                 @endcan
 
