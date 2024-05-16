@@ -22,6 +22,7 @@ class ShowPosts extends Component
     public $open = false;
     public $postEditId = '';
     public $cant = '10';
+    public $rutaActual;
     public $selectBranch;
     public $create_image, $update_image;
     public $imageTool = false;
@@ -114,9 +115,22 @@ class ShowPosts extends Component
             $this->sort = $sort;
         }
     }
+    public function mount()
+    {
+        $this->rutaActual = request()->route()->getName();
+    }
 
     public function render()
     {
+        //Obtener la ruta actual
+        $rutaActual = $this->rutaActual;
+
+        //Obtener los id de las sucursales que tienen el rol encargado de activo
+        $activo_rol_branch = Branch::join('model_has_roles', 'branches.user_id', '=', 'model_has_roles.model_id')
+            ->where('model_has_roles.role_id', 3)
+            ->pluck('branches.id')
+            ->toArray() ?: [];
+
         //Obtener el nombre de la sucursal para mostrarlo en la vista
         $branch_name = Branch::where('user_id', Auth::user()->id)->value('name');
 
@@ -144,7 +158,7 @@ class ShowPosts extends Component
         $rol = Role::join('model_has_roles', 'roles.id', '=', 'model_has_roles.role_id')
             ->where('model_has_roles.model_id', Auth::user()->id)
             ->value('roles.name');
-                  
+
         // El switch se encarga de mostrar los datos segun el rol
         switch ($rol) {
             case 'Encargado de Activo':
@@ -158,6 +172,17 @@ class ShowPosts extends Component
                     ->paginate($this->cant);
                 break;
 
+            case 'Administrador':
+                $branch_ids = $rutaActual == 'admin.inventory_asset.index' ? $activo_rol_branch : array_diff(Branch::pluck('id')->toArray(), $activo_rol_branch);
+                $posts = Inventory::join('branches', 'inventories.branch_id', '=', 'branches.id')
+                    ->select('inventories.*', 'branches.name as name_branch')
+                    ->whereIn('inventories.branch_id', $branch_ids)
+                    ->where('inventories.name_equipment', 'like', '%' . $this->search . '%')
+                    ->where('state', 1)
+                    ->orderBy($this->sort, $this->direction)
+                    ->paginate($this->cant);
+
+                break;
             default:
                 // Si el rol es diferente de Encargado de Activo, se muestran los datos de todas las sucursales menos la de activo fijo
                 $posts = Inventory::join('branches', 'inventories.branch_id', '=', 'branches.id')
