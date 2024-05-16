@@ -454,9 +454,7 @@
                                             {{ $user->company_position }}
                                         </option>
                                     @endforeach
-
                                 </select>
-
                                 <x-input-error for="selectedInput" />
                             </div>
                             <div class="text-right ">
