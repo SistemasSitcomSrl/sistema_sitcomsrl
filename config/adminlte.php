@@ -319,12 +319,12 @@ return [
                     'label_color' => 'success',
                     'can' => 'admin.users.index'
                 ],
-                [
-                    'text' => '1.2 Roles',
-                    'route' => 'admin.roles.index',
-                    'icon' => 'fas fa-users-cog fa-fw',
-                    'can' => 'admin.rol.index',
-                ],
+                // [
+                //     'text' => '1.2 Roles',
+                //     'route' => 'admin.roles.index',
+                //     'icon' => 'fas fa-users-cog fa-fw',
+                //     'can' => 'admin.rol.index',
+                // ],
 
             ],
         ],
