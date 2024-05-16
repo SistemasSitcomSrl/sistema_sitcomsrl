@@ -148,6 +148,7 @@ class ShowUsers extends Component
                 'users.state',
                 DB::raw('COALESCE(branches.name, "-") as name_branch')
             )  // Uso de COALESCE
+            ->where('users.name', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->cant);
 
