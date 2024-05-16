@@ -7,13 +7,14 @@ use App\Models\User;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class ShowUsers extends Component
 {
     use WithPagination;
     public $name, $ci, $email, $password, $passwordConfirmation, $phone_number, $company_position, $roles, $selectedRol;
-  public $search = '';
-    public $sort = 'id';
+    public $search = '';
+    public $sort = 'users.id';
     public $direction = 'asc';
     public $openUpdate = false;
     public $openRol = false;
@@ -88,7 +89,7 @@ class ShowUsers extends Component
             $user->update([
                 'name' => $this->userEdit['name'],
                 'phone_number' => $this->userEdit['phone_number'],
-                'company_position' => $this->userEdit['company_position'],               
+                'company_position' => $this->userEdit['company_position'],
 
             ]);
         } else {
@@ -101,7 +102,7 @@ class ShowUsers extends Component
         }
 
         $user->syncRoles($this->userEdit['selectedRol']);
-        
+
         $this->reset(['userEditId', 'userEdit', 'openUpdate']);
         //Aletar despues de crear
         $this->dispatch('alert', 'Actualizado con Exito');
@@ -123,7 +124,6 @@ class ShowUsers extends Component
     {
 
         if ($this->sort == $sort) {
-
             if ($this->direction == 'desc') {
                 $this->direction = 'asc';
             } else {
@@ -135,11 +135,23 @@ class ShowUsers extends Component
     }
     public function render()
     {
-
-
-        $users = User::where('name', 'like', '%' . $this->search . '%')
+        $users = User::join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->leftJoin('branches', 'branches.user_id', '=', 'users.id')  // Cambiado a leftJoin
+            ->select(
+                'users.id',
+                'users.name',
+                'users.ci',
+                'users.email',
+                'users.phone_number',
+                'roles.name as name_role',
+                'users.state',
+                DB::raw('COALESCE(branches.name, "Sin Sucursal") as name_branch')
+            )  // Uso de COALESCE
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->cant);
+
+
 
         return view('livewire.usuarios.show-users', compact('users'));
     }

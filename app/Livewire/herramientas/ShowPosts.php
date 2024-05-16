@@ -182,13 +182,23 @@ class ShowPosts extends Component
             ->pluck('branches.id')
             ->toArray() ?: [];
 
+        //Obtener los id de las sucursales que no tienen el rol encargado de activo
+        $almacen_rol_branch = array_diff(Branch::pluck('id')->toArray(), $activo_rol_branch);
+
+        //Obtener las sucursales para mostrarlas en el select sin la sucursal activo fijo        
+        if ($rutaActual == 'admin.inventory_asset.index') {
+            $inputBranch = Branch::select('id', 'name')->whereIn('id', $activo_rol_branch)->get();
+        } else {
+            $inputBranch = Branch::select('id', 'name')->whereIn('id', $almacen_rol_branch)->get();
+        }
+
         //Obtener el nombre de la sucursal para mostrarlo en la vista
         $branch_name = Branch::where('user_id', Auth::user()->id)->value('name');
 
         // En caso de que no haya sucursal, se asigna el valor de "Todas las Sucursales"
         if ($branch_name == null) {
             if ($rutaActual == 'admin.inventory_asset.index') {
-                $branch_name = "Activo Fijo";               
+                $branch_name = "Activo Fijo";
             } else {
                 $branch_name = "Todas las Sucursales";
             }
@@ -200,14 +210,17 @@ class ShowPosts extends Component
         if ($this->selectBranch != null) {
             if ($this->selectBranch == 0) {
                 $branch_id = null;
-                $branch_name = "Todas las Sucursales";
+                if ($rutaActual == 'admin.inventory_asset.index') {
+                    $branch_name = "Todas los Activos Fijos";
+                } else {
+                    $branch_name = "Todas las Sucursales";
+                }
             } else {
+
                 $branch_id = $this->selectBranch;
                 $branch_name = Branch::where('id', $this->selectBranch)->value('name');
             }
         }
-        //Obtener las sucursales para mostrarlas en el select sin la sucursal activo fijo
-        $inputBranch = Branch::select('id', 'name')->where('id', '!=', 1)->get();
 
         //Mostar los datos segun el rol
         $rol = Role::join('model_has_roles', 'roles.id', '=', 'model_has_roles.role_id')
@@ -231,7 +244,14 @@ class ShowPosts extends Component
                 $branch_ids = $rutaActual == 'admin.inventory_asset.index' ? $activo_rol_branch : array_diff(Branch::pluck('id')->toArray(), $activo_rol_branch);
                 $posts = Inventory::join('branches', 'inventories.branch_id', '=', 'branches.id')
                     ->select('inventories.*', 'branches.name as name_branch')
-                    ->whereIn('inventories.branch_id', $branch_ids)
+                    ->where(function ($query) use ($branch_id, $branch_ids) {
+                        // Si $branch_id es null, no aplicamos la condición
+                        if ($branch_id !== null) {
+                            $query->where('inventories.branch_id', $branch_id);
+                        } else {
+                            $query->whereIn('inventories.branch_id', $branch_ids);
+                        }
+                    })
                     ->where('inventories.name_equipment', 'like', '%' . $this->search . '%')
                     ->where('state', 1)
                     ->orderBy($this->sort, $this->direction)

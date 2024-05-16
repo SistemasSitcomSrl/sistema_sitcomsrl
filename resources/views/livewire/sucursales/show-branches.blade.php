@@ -121,16 +121,16 @@
                             </th>
                             <th scope="col"
                                 class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                wire:click="order('company_position')">
+                                wire:click="order('rol')">
 
-                                @if ($sort == 'company_position')
+                                @if ($sort == 'rol')
                                     @if ($direction == 'asc')
-                                        <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Cargo Empresa
+                                        <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Rol
                                     @else
-                                        <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Cargo Empresa
+                                        <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Rol
                                     @endif
                                 @else
-                                    <i class= "fas fa-sort ">&nbsp;</i>Cargo Empresa
+                                    <i class= "fas fa-sort ">&nbsp;</i>Rol
                                 @endif
                             </th>
                             @php
@@ -181,7 +181,7 @@
                                 </td>
                                 <td class="px-1 py-2 text-left">
                                     <div class="text-sm text-gray-900">
-                                        {{ $branch->company_position }}
+                                        {{ $branch->rol }}
                                     </div>
                                 </td>
                                 <td class="flex px-1 py-2  ">

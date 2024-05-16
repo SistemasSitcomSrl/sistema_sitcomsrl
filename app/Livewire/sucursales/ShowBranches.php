@@ -192,8 +192,11 @@ class ShowBranches extends Component
             ->Where('id', '<>', 1)
             ->Where('state', 1)
             ->get();
+
         $branches = Branch::join('users', 'users.id', '=', 'branches.user_id')
-            ->select('branches.*', 'users.name as name_user', 'users.company_position as company_position')
+            ->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->select('branches.*', 'users.name as name_user', 'users.company_position as company_position', 'roles.name as rol')
             ->where('branches.name', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->cant);

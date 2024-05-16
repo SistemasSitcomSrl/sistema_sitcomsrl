@@ -135,7 +135,7 @@
                 <div class="icon">
                     <i class="fa-solid fa-truck-moving"></i>
                 </div>
-                <a href="{{ Route('admin.request.index') }}" class="small-box-footer">
+                <a href="{{ Route('admin.request_asset.index') }}" class="small-box-footer">
                     Mas Informacion <i class="fas fa-arrow-circle-right"> </i>
                 </a>
             </div>
