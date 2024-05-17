@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Inventory;
 use App\Models\User;
 use App\Models\Projects;
-use App\Models\Movements;
-use App\Models\Workers;
-
+use Illuminate\Support\Facades\Storage;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -21,6 +19,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Storage::deleteDirectory('livewire-tmp');
+        Storage::deleteDirectory('temp-images');
+        Storage::deleteDirectory('tool');
+
+        Storage::makeDirectory('livewire-tmp');
+        Storage::makeDirectory('temp-images');
+        Storage::makeDirectory('tool');
         $this->call(RoleSeeder::class);
 
         User::create([
@@ -55,7 +60,7 @@ class DatabaseSeeder extends Seeder
 
         Branch::create([
             'id' => '1',
-            'name' => 'Activo Fijos',
+            'name' => 'Santa Cruz',
             'department' => 'Santa Cruz',
             'direction' => 'Dir. Av. Mariscal Santa Cruz # 6350',
             'number_phone' => '73131938',
@@ -63,26 +68,11 @@ class DatabaseSeeder extends Seeder
         ]);
         Branch::create([
             'id' => '2',
-            'name' => 'Sucursal Santa Cruz',
+            'name' => 'Santa Cruz',
             'department' => 'Santa Cruz',
             'direction' => 'Dir. Av. Mariscal Santa Cruz # 6350',
             'number_phone' => '74636352',
             'user_id' => '3'
         ]);    
-
-        Projects::create([
-            'cuce' => '4651-4542-4242A',
-            'type' => 'LP',
-            'object' => 'Mantenimiento Control de Acceso Gestion 2024',
-            'entity' => 'YPFB',
-            'ubi_entity' => 'Santa Cruz',
-            'ubi_projects' => 'Santa Cruz',
-            'date_opening' => '12-09-12',
-            'date_notification' => '12-09-12',
-            'reference_price' => '150000',
-            'id_user' => 2,
-        ]);
-        // Inventory::factory(100)->create();
-
     }
 }

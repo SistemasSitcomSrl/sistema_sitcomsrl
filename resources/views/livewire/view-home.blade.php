@@ -9,18 +9,6 @@
 
         <div class="flex flex-wrap gap-4">
 
-            <div class="flex-1 md:w-1/3 lg:w-1/4 p-2 small-box bg-gradient-success">
-                <div class="inner">
-                    <h3>{{ $branch_count }}</h3>
-                    <p>Sucursales</p>
-                </div>
-                <div class="icon">
-                    <i class="fa-solid fa-building"></i>
-                </div>
-                <a href="{{ Route('admin.branch.index') }}" class="small-box-footer">
-                    Mas Informacion <i class="fas fa-arrow-circle-right"> </i>
-                </a>
-            </div>
             <div class="flex-1 md:w-1/3 lg:w-1/4 p-2 small-box  bg-gradient-danger">
                 <div class="inner">
                     <h3> {{ $tool_count }}</h3>
@@ -30,10 +18,9 @@
                     <i class="fa-solid fa-screwdriver-wrench"></i>
                 </div>
                 <a href="{{ Route('admin.inventory.index') }}" class="small-box-footer">
-                    Mas Informacion <i class="fas fa-arrow-circle-right"></i>
+                    Mas Información <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
-
 
             <div class="flex-1 md:w-1/3 lg:w-1/4 p-2 small-box bg-gradient-secondary">
                 <div class="inner">
@@ -44,13 +31,9 @@
                     <i class="fa-solid fa-truck-moving"></i>
                 </div>
                 <a href="{{ Route('admin.request.index') }}" class="small-box-footer">
-                    Mas Informacion <i class="fas fa-arrow-circle-right"> </i>
+                    Mas Información <i class="fas fa-arrow-circle-right"> </i>
                 </a>
             </div>
-            @can('admin.Link.store')
-            </div>
-            <div class="flex flex-wrap gap-4">
-            @endcan
             <div class="flex-1 md:w-1/3 lg:w-1/4 p-2 small-box bg-gradient-teal">
                 <div class="inner">
                     <h3>{{ $retired_count }}</h3>
@@ -60,9 +43,15 @@
                     <i class="fa-solid fa-box-archive"></i>
                 </div>
                 <a href="{{ Route('admin.retired.index') }}" class="small-box-footer">
-                    Mas Informacion <i class="fas fa-arrow-circle-right"> </i>
+                    Mas Información <i class="fas fa-arrow-circle-right"> </i>
                 </a>
             </div>
+
+            @can('admin.Link.store')
+            </div>
+            <div class="flex flex-wrap gap-4">
+            @endcan
+
             <div class="flex-1 md:w-1/3 lg:w-1/4 p-2 small-box bg-gradient-primary">
                 <div class="inner">
                     <h3>{{ $movement_count }}</h3>
@@ -72,7 +61,7 @@
                     <i class="fas fa-fw fa-dolly"></i>
                 </div>
                 <a href="{{ Route('admin.movement.index') }}" class="small-box-footer">
-                    Mas Informacion <i class="fas fa-arrow-circle-right"></i>
+                    Mas Información <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
 
@@ -86,12 +75,11 @@
                     <i class="fas fa-right-left"></i>
                 </div>
                 <a href="{{ Route('admin.transfer-received.index') }}" class="small-box-footer">
-                    Mas Informacion <i class="fas fa-arrow-circle-right"></i>
+                    Mas Información <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>
     @endif
-
     @php
         $can = Gate::allows('admin.Link.active') || Gate::allows('admin.Link.Admin');
     @endphp
@@ -102,18 +90,6 @@
 
         <div class="flex flex-wrap gap-4">
 
-            <div class="flex-1 md:w-1/3 lg:w-1/4 p-2 small-box bg-gradient-success">
-                <div class="inner">
-                    <h3>{{ $worker_count }}</h3>
-                    <p>Trabajadores</p>
-                </div>
-                <div class="icon">
-                    <i class="fa-solid fa-address-card"></i>
-                </div>
-                <a href="{{ Route('admin.workers.index') }}" class="small-box-footer">
-                    Mas Informacion <i class="fas fa-arrow-circle-right"> </i>
-                </a>
-            </div>
             <div class="flex-1 md:w-1/3 lg:w-1/4 p-2 small-box  bg-gradient-danger">
                 <div class="inner">
                     <h3> {{ $tool_count_active }}</h3>
@@ -123,26 +99,22 @@
                     <i class="fa-solid fa-screwdriver-wrench"></i>
                 </div>
                 <a href="{{ Route('admin.inventory_asset.index') }}" class="small-box-footer">
-                    Mas Informacion <i class="fas fa-arrow-circle-right"></i>
+                    Mas Información <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
 
             <div class="flex-1 md:w-1/3 lg:w-1/4 p-2 small-box bg-gradient-secondary">
                 <div class="inner">
                     <h3>{{ $requestInventory_count_active }}</h3>
-                    <p>Agregar de Equipos</p>
+                    <p>Agregar Equipos</p>
                 </div>
                 <div class="icon">
                     <i class="fa-solid fa-truck-moving"></i>
                 </div>
                 <a href="{{ Route('admin.request_asset.index') }}" class="small-box-footer">
-                    Mas Informacion <i class="fas fa-arrow-circle-right"> </i>
+                    Mas Información <i class="fas fa-arrow-circle-right"> </i>
                 </a>
             </div>
-            @can('admin.Link.active')
-            </div>
-            <div class="flex flex-wrap gap-4">
-            @endcan
             <div class="flex-1 md:w-1/3 lg:w-1/4 p-2 small-box bg-gradient-teal">
                 <div class="inner">
                     <h3>{{ $retired_count_active }}</h3>
@@ -152,20 +124,38 @@
                     <i class="fa-solid fa-box-archive"></i>
                 </div>
                 <a href="{{ Route('admin.retired_asset.index') }}" class="small-box-footer">
-                    Mas Informacion <i class="fas fa-arrow-circle-right"> </i>
+                    Mas Información <i class="fas fa-arrow-circle-right"> </i>
                 </a>
             </div>
+            
+            @can('admin.Link.active')
+            </div>
+            <div class="flex flex-wrap gap-4">
+            @endcan
 
             <div class="flex-1 md:w-1/3 lg:w-1/4 p-2 small-box bg-gradient-primary">
                 <div class="inner">
                     <h3>{{ $assign_count }}</h3>
-                    <p>Asignación</p>
+                    <p>Asignación de Activo</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-handshake-angle"></i>
                 </div>
                 <a href="{{ Route('admin.assign.index') }}" class="small-box-footer">
-                    Mas Informacion <i class="fas fa-arrow-circle-right"></i>
+                    Mas Información <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+
+            <div class="flex-1 md:w-1/3 lg:w-1/4 p-2 small-box bg-info">
+                <div class="inner">
+                    <h3>{{ $worker_count }}</h3>
+                    <p>Trabajadores</p>
+                </div>
+                <div class="icon">
+                    <i class="fa-solid fa-address-card"></i>
+                </div>
+                <a href="{{ Route('admin.workers.index') }}" class="small-box-footer">
+                    Mas Información <i class="fas fa-arrow-circle-right"> </i>
                 </a>
             </div>
         </div>

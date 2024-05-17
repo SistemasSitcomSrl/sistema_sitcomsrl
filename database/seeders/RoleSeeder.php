@@ -104,7 +104,7 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'admin.branch.index',
             'description' => 'Lista Sucursales'
-        ])->syncRoles([$admin, $almacen]);
+        ])->syncRoles([$admin]);
 
         //Sucursal Crear
         Permission::create([

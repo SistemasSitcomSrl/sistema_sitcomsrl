@@ -341,56 +341,42 @@ return [
                     'can' => 'admin.project.index',
                 ],
             ],
-        ],
-        [
-            'text' => '3. Sucursal',
-            'icon' => '',
-            'can' => 'admin.branch.index',
-            'submenu' => [
-                [
-                    'text' => '3.1 Sucursales',
-                    'route' => 'admin.branch.index',
-                    'icon' => 'fa-solid fa-building',
-
-                    'can' => 'admin.branch.index',
-                ],
-            ],
-        ],
+        ],       
         //Links para Encargado de Almacen
         [
-            'text' => '4. Almacen',
+            'text' => '3. Almacen',
             'icon' => '',
             'can' => ['admin.Link.store', 'admin.Link.Admin'],
             'submenu' => [
                 [
-                    'text' => '4.1 Inventario',
+                    'text' => '3.1 Inventario',
                     'route' => 'admin.inventory.index',
                     'icon' => 'fa-solid fa-screwdriver-wrench',
                     'can' => 'admin.inventory.index'
                 ],
                 [
-                    'text' => '4.2 Agregar',
+                    'text' => '3.2 Agregar',
                     'route' => 'admin.request.index',
                     'icon' => 'fa-solid fa-truck-moving',
                     'can' => 'admin.request.index',
                     'active' => ['/solicitud/crear'],
                 ],
                 [
-                    'text' => '4.3 Dar de Baja',
+                    'text' => '3.3 Dar de Baja',
                     'route' => 'admin.retired.index',
                     'icon' => 'fa-solid fa-box-archive',
                     'can' => 'admin.retired.index',
                     'active' => ['/retirado/crear'],
                 ],
                 [
-                    'text' => '4.4 Asignar',
+                    'text' => '3.4 Asignar',
                     'route' => 'admin.movement.index',
                     'icon' => 'fas fa-fw fa-dolly',
                     'can' => 'admin.movement.index',
                     'active' => ['/prestar/crear'],
                 ],
                 [
-                    'text' => '4.5 Transf. Enviadas',
+                    'text' => '3.5 Transf. Enviadas',
                     'route' => 'admin.transfer-sent.index',
                     'icon' => 'fa-solid fa-arrow-right',
                     'can' => 'admin.transfer-sent.index',
@@ -398,51 +384,57 @@ return [
 
                 ],
                 [
-                    'text' => '4.6 Transf. Recibidas',
+                    'text' => '3.6 Transf. Recibidas',
                     'route' => 'admin.transfer-received.index',
                     'icon' => 'fa-solid fa-arrow-left',
                     'can' => 'admin.transfer-receive.index',
+                ],
+                [
+                    'text' => '3.7 Sucursales',
+                    'route' => 'admin.branch.index',
+                    'icon' => 'fa-solid fa-building',
+                    'can' => 'admin.branch.index',
                 ],
             ],
         ],
         //Links para Encargado de Activo Fijo
         [
-            'text' => '5. Activo Fijo',
+            'text' => '4. Activo Fijo',
             'icon' => '',
             'can' => ['admin.Link.active','admin.Link.Admin'],
             'submenu' => [
                 [
-                    'text' => '5.1 Inventario',
+                    'text' => '4.1 Inventario',
                     'route' => 'admin.inventory_asset.index',
                     'icon' => 'fa-solid fa-screwdriver-wrench',
                     'can' => 'admin.inventory.index_activo',
-                ],
+                ],               
                 [
-                    'text' => '5.2 Personal',
-                    'route' => 'admin.workers.index',
-                    'icon' => 'fa-solid fa-address-card',
-                    'can' => 'admin.workers.index'
-                ],
-                [
-                    'text' => '5.3 Agregar',
+                    'text' => '4.2 Agregar',
                     'route' => 'admin.request_asset.index',
                     'icon' => 'fa-solid fa-truck-moving',
                     'can' => 'admin.request.index_activo',
                     'active' => ['/solicitud/crear'],
                 ],
                 [
-                    'text' => '5.4 Dar de Baja',
+                    'text' => '4.3 Dar de Baja',
                     'route' => 'admin.retired_asset.index',
                     'icon' => 'fa-solid fa-box-archive',
                     'can' => 'admin.retired.index_activo',
                     'active' => ['/retirado/crear'],
                 ],
                 [
-                    'text' => '5.5 Asignar',
+                    'text' => '4.4 Asignar',
                     'route' => 'admin.assign.index',
                     'icon' => 'fa-solid fa-handshake-angle',
                     'can' => 'admin.assign.index',
                     'active' => ['/asignar/crear'],
+                ],
+                [
+                    'text' => '4.5 Personal',
+                    'route' => 'admin.workers.index',
+                    'icon' => 'fa-solid fa-address-card',
+                    'can' => 'admin.workers.index'
                 ],
             ],
         ],       
