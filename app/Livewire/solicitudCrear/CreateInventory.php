@@ -79,7 +79,7 @@ class CreateInventory extends Component
         'searchForm.create_location' => 'ubicación',
         'searchForm.create_unit_measure' => 'unidad',
         'searchForm.create_price' => 'precio',
-        'searchForm.create_image' => 'imagen',
+        'create_image' => 'imagen',
         'searchForm.select_type' => 'tipo hta.'
     ];
     public function mount()

@@ -51,7 +51,7 @@
                             <th>Ubicación</th>
                             <th>Precio</th>
                             <th>Tipo</th>
-                            <th>Cantidad</th>
+                            <th>Cantidad</th>                    
                         </tr>
                     </thead>
                     @php
@@ -147,7 +147,7 @@
                         <thead class="bg-gray-50 sticky top-0">
                             <tr>
                                 <th scope="col"
-                                    class="px-1 py-1 text-left text-xs font-medium text-gray-500 tracking-wider"
+                                    class="px-1 py-1 text-center text-xs font-medium text-gray-500 tracking-wider"
                                     wire:click="order('id')">
 
                                     @if ($sort == 'id')
@@ -167,12 +167,12 @@
 
                                     @if ($sort == 'name_equipment')
                                         @if ($direction == 'asc')
-                                            <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Nombre
+                                            <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Detalle
                                         @else
-                                            <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Nombre
+                                            <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Detalle
                                         @endif
                                     @else
-                                        <i class= "fas fa-sort ">&nbsp;</i>Nombre
+                                        <i class= "fas fa-sort ">&nbsp;</i>Detalle
                                     @endif
 
                                 </th>
@@ -182,12 +182,12 @@
 
                                     @if ($sort == 'bar_Code')
                                         @if ($direction == 'asc')
-                                            <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Codigo
+                                            <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Tipo
                                         @else
-                                            <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Codigo
+                                            <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Tipo
                                         @endif
                                     @else
-                                        <i class= "fas fa-sort ">&nbsp;</i>Codigo
+                                        <i class= "fas fa-sort ">&nbsp;</i>Tipo
                                     @endif
 
                                 </th>
@@ -207,7 +207,7 @@
                                 </th>
                                 <th scope="col"
                                     class="px-1 py-1 text-center text-xs font-medium text-gray-500 tracking-wider">
-                                    Opcion
+                                    Opción
                                 </th>
                             </tr>
                         </thead>
@@ -222,12 +222,12 @@
                                     </td>
                                     <td class="px-1 py-1">
                                         <div class="text-xs text-gray-900">
-                                            {{ $movement->name_equipment }}
+                                            {{$movement->name_equipment}} - {{$movement->brand}} -  {{ $movement->color }}
                                         </div>
                                     </td>
                                     <td class="px-1 py-1">
                                         <div class="text-xs text-gray-900">
-                                            {{ $movement->bar_Code }}
+                                            {{ $movement->type }}
                                         </div>
                                     </td>
                                     <td class="px-1 py-1">
@@ -286,10 +286,10 @@
                             <div class="grid grid-rows-5 grid-flow-col">
                                 <div class="grid grid-cols-1 gap-4 mt-1 ">
                                     <div>
-                                        <x-label value="Nombre de la Equipo: *" />
+                                        <x-label value="Nombre del Equipo: *" />
                                         <x-input wire:model.live="create_name_equipment"
                                             wire:keyup="buscarHerramienta" type="text" class="w-full"
-                                            placeholder="Ingrese Nombre de la Equipo" />
+                                            placeholder="Ingrese Nombre del Equipo" />
                                         <x-input-error for="create_name_equipment" />
                                     </div>
                                 </div>
