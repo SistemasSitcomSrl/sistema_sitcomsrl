@@ -336,7 +336,7 @@
         </div>
         <br><br><br><br><br><br>
 
-        {{-- <div class="signature-fields">
+        <div class="signature-fields">
             @foreach ($movements as $movement)
                 <div class="signature-column">
                     <div class="signature-container">
@@ -362,7 +362,7 @@
                     break;
                 @endphp
             @endforeach
-        </div> --}}
+        </div>
 
     </body>
 
