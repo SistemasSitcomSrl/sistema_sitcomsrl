@@ -228,8 +228,8 @@
     </tr>
     <tr>
         <th>Nro</th>
-        <th>Nombre</th>
-        <th style=" text-align: center;">Codigo</th>
+        <th>Detalle</th>
+        <th style=" text-align: center;">Marca</th>
         <th>Unidad</th>
         <th>Tipo</th>
         <th style="text-align: center;">Precio(Bs)</th>
@@ -246,9 +246,9 @@
         <tr style=" background-color: #d7dbdd37;">
             <td style="text-align: center; font-weight: bold;">{{ $counter++ }}</td>
             <td style="font-weight: bold;">{{ $movement->name_equipment }}</td>
-            <td style=" text-align: center; font-weight: bold;">{{ $movement->bar_Code }}</td>
+            <td style=" text-align: center; font-weight: bold;">{{ $movement->brand }}</td>
             <td style="font-weight: bold;">{{ $movement->unit_measure }}</td>
-            <td style="font-weight: bold;">{{ $movement->type }}</td>
+            <td style=" text-align: center; font-weight: bold;">{{ $movement->type }}</td>
             <td style="text-align: center; font-weight: bold;">{{ $movement->price }}</td>
             <td style=" text-align: center; font-weight: bold;">{{ $movement->missing_amount }}</td>
             @if ($movement->missing_amount == $movement->return_amount)
