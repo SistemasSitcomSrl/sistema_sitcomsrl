@@ -222,6 +222,23 @@
         @endforeach
     </table>
 </div>
+
+<div class="customer-info">
+    <table>
+        <tr>
+            <th style="text-align: center; font-size: 12px;" colspan="4">Datos del Encargado</th>
+        </tr>
+        @foreach ($movements as $movement)
+            <tr>
+                <th style="text-align: right;">Nombre:</th>
+                <td>{{ $movement->manager_name }}</td>
+                <th style="text-align: right;">Cargo:</th>
+                <td>{{ $movement->manager_company_position }}</td> 
+            </tr>         
+        @break
+    @endforeach
+</table>
+</div>
 <table>
     <tr>
         <th style="text-align: center; font-size: 12px;" colspan="10">Detalles de los Equipos</th>
@@ -231,7 +248,7 @@
         <th>Detalle</th>
         <th style=" text-align: center;">Marca</th>
         <th>Unidad</th>
-        <th>Tipo</th>
+        <th style="text-align: center;">Tipo</th>
         <th style="text-align: center;">Precio(Bs)</th>
         <th style=" text-align: center;">Cantidad</th>
         <th style=" text-align: center;">Devuelto</th>
@@ -244,22 +261,22 @@
 
     @foreach ($movements as $movement)
         <tr style=" background-color: #d7dbdd37;">
-            <td style="text-align: center; font-weight: bold;">{{ $counter++ }}</td>
-            <td style="font-weight: bold;">{{ $movement->name_equipment }}</td>
-            <td style=" text-align: center; font-weight: bold;">{{ $movement->brand }}</td>
-            <td style="font-weight: bold;">{{ $movement->unit_measure }}</td>
-            <td style=" text-align: center; font-weight: bold;">{{ $movement->type }}</td>
-            <td style="text-align: center; font-weight: bold;">{{ $movement->price }}</td>
-            <td style=" text-align: center; font-weight: bold;">{{ $movement->missing_amount }}</td>
+            <td style="text-align: center; ">{{ $counter++ }}</td>
+            <td style="">{{ $movement->name_equipment }}</td>
+            <td style=" text-align: center; ">{{ $movement->brand }}</td>
+            <td style="">{{ $movement->unit_measure }}</td>
+            <td style=" text-align: center; ">{{ $movement->type }}</td>
+            <td style="text-align: center; ">{{ $movement->price }}</td>
+            <td style=" text-align: center; ">{{ $movement->missing_amount }}</td>
             @if ($movement->missing_amount == $movement->return_amount)
-                <td style=" text-align: center; font-weight: bold; color:green">{{ $movement->return_amount }}
+                <td style=" text-align: center;  color:green">{{ $movement->return_amount }}
                 </td>
             @else
-                <td style=" text-align: center; font-weight: bold; color:red">{{ $movement->return_amount }}
+                <td style=" text-align: center;  color:red">{{ $movement->return_amount }}
                 </td>
             @endif
-            <td style=" text-align: center; font-weight: bold;">-</td>
-            <td style=" text-align: center; font-weight: bold;">-</td>
+            <td style=" text-align: center; ">-</td>
+            <td style=" text-align: center; ">-</td>
         </tr>
         @php
             $i = 1;
