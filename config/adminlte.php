@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'logo' => '<b>SITCOM</b>SRL',
+    'logo' => '<b>SITCOM </b>SRL',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -108,7 +108,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'img' => [
             'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
             'alt' => 'AdminLTE Preloader Image',
@@ -149,7 +149,7 @@ return [
     |
     */
 
-    'layout_topnav' => null,
+    'layout_topnav' => false,
     'layout_boxed' => null,
     'layout_fixed_sidebar' => true,
     'layout_fixed_navbar' => true,
@@ -187,7 +187,7 @@ return [
     |
     */
 
-    'classes_body' => '',
+    'classes_body' => 'sidebar-open',
     'classes_brand' => '',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
@@ -211,8 +211,8 @@ return [
     |
     */
 
-    'sidebar_mini' => true,
-    'sidebar_collapse' => true,
+    'sidebar_mini' => false,
+    'sidebar_collapse' => false,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
@@ -409,7 +409,7 @@ return [
         [
             'text' => '5. Activo Fijo',
             'icon' => '',
-            'can' => ['admin.Link.active','admin.Link.Admin'],
+            'can' => ['admin.Link.active', 'admin.Link.Admin'],
             'submenu' => [
                 [
                     'text' => '5.1 Inventario',
@@ -445,7 +445,7 @@ return [
                     'active' => ['/asignar/crear'],
                 ],
             ],
-        ],       
+        ],
     ],
 
     /*
@@ -529,12 +529,12 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@10',
                 ],
             ],
         ],

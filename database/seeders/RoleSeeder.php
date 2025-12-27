@@ -301,12 +301,12 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'admin.movement.accept',
             'description' => 'Aceptar Movimiento'
-        ])->syncRoles([$almacen]);
+        ])->syncRoles([$admin]);
 
         //NO MOSTRAR -- Asignar Aceptar Solicitud o Rechazar
         Permission::create([
             'name' => 'admin.movement.refused',
-            'description' => 'Aceptar Asignar'
+            'description' => 'Rechazar Movimiento'
         ])->syncRoles([$admin]);
 
         //NO MOSTRAR -- Ver select de Sucursales
