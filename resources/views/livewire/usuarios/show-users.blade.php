@@ -79,34 +79,33 @@
                                 @else
                                     <i class= "fas fa-sort ">&nbsp;</i>Nro Carnet
                                 @endif
-
                             </th>
                             <th scope="col"
                                 class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                wire:click="order('email')">
+                                wire:click="order('name_role')">
 
-                                @if ($sort == 'email')
+                                @if ($sort == 'name_role')
                                     @if ($direction == 'asc')
-                                        <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Correo electronico
+                                        <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Rol
                                     @else
-                                        <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Correo electronico
+                                        <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Rol
                                     @endif
                                 @else
-                                    <i class= "fas fa-sort ">&nbsp;</i>Correo electronico
+                                    <i class= "fas fa-sort ">&nbsp;</i>Rol
                                 @endif
                             </th>
                             <th scope="col"
                                 class="px-1 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                wire:click="order('company_position')">
+                                wire:click="order('name_branch')">
 
-                                @if ($sort == 'company_position')
+                                @if ($sort == 'name_branch')
                                     @if ($direction == 'asc')
-                                        <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Cargo Empresa
+                                        <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Sucursal
                                     @else
-                                        <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Cargo Empresa
+                                        <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Sucursal
                                     @endif
                                 @else
-                                    <i class= "fas fa-sort ">&nbsp;</i>Cargo Empresa
+                                    <i class= "fas fa-sort ">&nbsp;</i>Sucursal
                                 @endif
                             </th>
                             <th scope="col"
@@ -175,12 +174,12 @@
                                 </td>
                                 <td class="px-1 py-1">
                                     <div class="text-sm text-gray-900">
-                                        {{ $user->email }}
+                                        {{ $user->name_role }}
                                     </div>
                                 </td>
                                 <td class="px-1 py-1">
                                     <div class="text-sm text-gray-900">
-                                        {{ $user->company_position }}
+                                        {{ $user->name_branch }}
                                     </div>
                                 </td>
                                 <td class="px-1 py-1">

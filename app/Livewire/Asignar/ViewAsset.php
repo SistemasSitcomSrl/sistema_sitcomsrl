@@ -277,7 +277,7 @@ class ViewAsset extends Component
             ->where('asset_allocations.id_worker', $this->receipt_number)
             ->where('asset_allocations.state', $this->state_receipt)
             ->where('name_equipment', 'like', '%' . $this->search . '%')
-            ->orderByRaw("CAST(SUBSTRING_INDEX(receipt_number, 'a-1.', -1) AS DECIMAL(10,2)) DESC")
+            ->orderBy('asset_allocations.id', 'desc')
             ->paginate($this->cant);
 
         $movements_histories = AssetHistory::select()->get();

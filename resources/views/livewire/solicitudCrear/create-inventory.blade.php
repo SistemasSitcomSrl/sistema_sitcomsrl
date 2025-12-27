@@ -20,7 +20,7 @@
             <div class="w-full">
                 <button type="button"
                     class="w-full m-0 text-xs text-white bg-blue-600 font-medium rounded-lg py-1.5 me-2 mb-2 " disabled>
-                    DATOS DEL RESPONSABLE 
+                    DATOS DEL RESPONSABLE
                 </button>
             </div>
 
@@ -51,7 +51,7 @@
                             <th>Ubicación</th>
                             <th>Precio</th>
                             <th>Tipo</th>
-                            <th>Cantidad</th>
+                            <th>Cantidad</th>                    
                         </tr>
                     </thead>
                     @php
@@ -147,7 +147,7 @@
                         <thead class="bg-gray-50 sticky top-0">
                             <tr>
                                 <th scope="col"
-                                    class="px-1 py-1 text-left text-xs font-medium text-gray-500 tracking-wider"
+                                    class="px-1 py-1 text-center text-xs font-medium text-gray-500 tracking-wider"
                                     wire:click="order('id')">
 
                                     @if ($sort == 'id')
@@ -167,12 +167,12 @@
 
                                     @if ($sort == 'name_equipment')
                                         @if ($direction == 'asc')
-                                            <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Nombre
+                                            <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Detalle
                                         @else
-                                            <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Nombre
+                                            <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Detalle
                                         @endif
                                     @else
-                                        <i class= "fas fa-sort ">&nbsp;</i>Nombre
+                                        <i class= "fas fa-sort ">&nbsp;</i>Detalle
                                     @endif
 
                                 </th>
@@ -182,12 +182,12 @@
 
                                     @if ($sort == 'bar_Code')
                                         @if ($direction == 'asc')
-                                            <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Codigo
+                                            <i class="fas fa-sort-alpha-up-alt ">&nbsp;</i>Tipo
                                         @else
-                                            <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Codigo
+                                            <i class="fas fa-sort-alpha-down-alt ">&nbsp;</i>Tipo
                                         @endif
                                     @else
-                                        <i class= "fas fa-sort ">&nbsp;</i>Codigo
+                                        <i class= "fas fa-sort ">&nbsp;</i>Tipo
                                     @endif
 
                                 </th>
@@ -207,7 +207,7 @@
                                 </th>
                                 <th scope="col"
                                     class="px-1 py-1 text-center text-xs font-medium text-gray-500 tracking-wider">
-                                    Opcion
+                                    Opción
                                 </th>
                             </tr>
                         </thead>
@@ -222,15 +222,12 @@
                                     </td>
                                     <td class="px-1 py-1">
                                         <div class="text-xs text-gray-900">
-                                            {{ $movement->name_equipment }}
+                                            {{$movement->name_equipment}} - {{$movement->brand}} -  {{ $movement->color }}
                                         </div>
                                     </td>
-
-
-
                                     <td class="px-1 py-1">
                                         <div class="text-xs text-gray-900">
-                                            {{ $movement->bar_Code }}
+                                            {{ $movement->type }}
                                         </div>
                                     </td>
                                     <td class="px-1 py-1">
@@ -238,18 +235,12 @@
                                             {{ $movement->amount }}
                                         </div>
                                     </td>
-                                    @if ($movement->amount == 0)
-                                        <td class="px-1 py-1 text-center items-center">
-                                            <i style="cursor:pointer;"
-                                                class="fa-solid fa-ban fa-lg text-[rgba(255,12,4,0.76)]"
-                                                @disabled(true)></i>
-                                        </td>
-                                    @else
-                                        <td class="px-1 py-1 text-center items-center">
-                                            <i wire:click="edit({{ $movement->id }})" style="cursor:pointer;"
-                                                class="fa-solid fa-square-plus fa-lg "></i>
-                                        </td>
-                                    @endif
+
+                                    <td class="px-1 py-1 text-center items-center">
+                                        <i wire:click="edit({{ $movement->id }})" style="cursor:pointer;"
+                                            class="fa-solid fa-square-plus fa-lg "></i>
+                                    </td>
+
                                 </tr>
                             @endforeach
                         </tbody>
@@ -295,10 +286,10 @@
                             <div class="grid grid-rows-5 grid-flow-col">
                                 <div class="grid grid-cols-1 gap-4 mt-1 ">
                                     <div>
-                                        <x-label value="Nombre de la Equipo: *" />
+                                        <x-label value="Nombre del Equipo: *" />
                                         <x-input wire:model.live="create_name_equipment"
                                             wire:keyup="buscarHerramienta" type="text" class="w-full"
-                                            placeholder="Ingrese Nombre de la Equipo" />
+                                            placeholder="Ingrese Nombre del Equipo" />
                                         <x-input-error for="create_name_equipment" />
                                     </div>
                                 </div>
@@ -374,12 +365,19 @@
                                         @endif
 
                                         <option value="" disabled selected>Seleccione Tipo</option>
-                                        <option value="activo">Activo Fijo
-                                        </option>
-                                        <option value="herramienta">Herramienta
-                                        </option>
-                                        <option value="material">Material
-                                        </option>
+                                        @switch($rol)
+                                            @case('Encargado de Almacen')
+                                                <option value="herramienta">Herramienta
+                                                </option>
+                                                <option value="material">Material
+                                                </option>
+                                            @break
+
+                                            @case('Encargado de Activo')
+                                                <option value="activo">Activo Fijo
+                                                </option>
+                                            @break
+                                        @endswitch
                                         </select>
                                         <x-input-error for="searchForm.select_type" />
                                     </div>
@@ -392,22 +390,39 @@
                                                 src="{{ $this->create_image->temporaryUrl() }}">
                                             <x-input-error for="create_image" />
                                         </div>
+
                                         <div class="row-span-1 pl-7">
-                                            <label for="uploadFile1"
-                                                class="bg-gray-800 hover:bg-gray-700 text-white text-sm px-4 py-1.5 outline-none rounded w-max cursor-pointer mx-auto block font-[sans-serif]">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    class="w-5 mr-2 fill-white inline" viewBox="0 0 32 32">
-                                                    <path
-                                                        d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
-                                                        data-original="#000000" />
-                                                    <path
-                                                        d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z"
-                                                        data-original="#000000" />
-                                                </svg>
-                                                Actualizar Imagen
-                                                <input type="file" accept="image/*" wire:model.live="create_image"
-                                                    id='uploadFile1' class="hidden" />
-                                            </label>
+                                            <div x-data="{ uploading: false, progress: 0 }" x-on:livewire-upload-start="uploading = true"
+                                                x-on:livewire-upload-finish="uploading = false"
+                                                x-on:livewire-upload-cancel="uploading = false"
+                                                x-on:livewire-upload-error="uploading = false"
+                                                x-on:livewire-upload-progress="progress = $event.detail.progress">
+                                                <div class="pb-1  mx-3 text-center" x-show="uploading">
+                                                    <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                                                        <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                                                            style="width: 100%">
+                                                            <div x-text="progress">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label for="uploadFile1"
+                                                    class=" bg-gray-800 hover:bg-gray-700 text-white text-sm px-4 py-1.5 outline-none rounded w-max cursor-pointer mx-auto block font-[sans-serif]">
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        class="w-5 mr-2 fill-white inline" viewBox="0 0 32 32">
+                                                        <path
+                                                            d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
+                                                            data-original="#000000" />
+                                                        <path
+                                                            d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z"
+                                                            data-original="#000000" />
+                                                    </svg>
+                                                    Actualizar Imagen
+                                                    <input type="file" accept="image/*"
+                                                        wire:model.live="create_image" id='uploadFile1'
+                                                        class="hidden" />
+                                                </label>
+                                            </div>
                                         </div>
                                     @else
                                         <div class="row-span-5 pt-9 pl-3">
@@ -440,12 +455,13 @@
                                                                 JPG o
                                                                 GIF (MAX. 300x200px)</p>
                                                         </div>
+
                                                         <input id="dropzone-file" wire:model.live="create_image"
                                                             type="file" class="hidden"
                                                             accept="image/*" /><x-input-error for="create_image" />
                                                     </label>
                                                 </div>
-                                                <div x-show="uploading">
+                                                <div class="pb-1  mx-3 text-center" x-show="uploading">
                                                     <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
                                                         <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
                                                             style="width: 100%">
@@ -454,6 +470,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     @endif
@@ -513,8 +530,8 @@
                                 <div class="grid grid-cols-1 gap-4 mt-1 ">
                                     <div>
                                         <x-label value="Nombre de Equipo:" />
-                                        <x-input wire:model="inventoryEdit.name_equipment" type="text" class="w-full"
-                                            disabled />
+                                        <x-input wire:model="inventoryEdit.name_equipment" type="text"
+                                            class="w-full" disabled />
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 mt-1">
@@ -548,8 +565,8 @@
                                             </option>
                                             <option value="material">Material
                                             </option>
-                                        </select>                                      
-                                    </div>                                   
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 mt-1">
                                     <div>
@@ -559,8 +576,8 @@
                                     </div>
                                     <div>
                                         <x-label value="Unidad medida:" />
-                                        <x-input wire:model="inventoryEdit.unit_measure" type="text" class="w-full"
-                                            disabled />
+                                        <x-input wire:model="inventoryEdit.unit_measure" type="text"
+                                            class="w-full" disabled />
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 mt-1">
@@ -568,10 +585,11 @@
                                         <x-label value="Codigo de Barra:" />
                                         <x-input wire:model="inventoryEdit.bar_Code" type="text" class="w-full"
                                             disabled />
-                                    </div>                                    
+                                    </div>
                                     <div>
                                         <x-label value="Cantidad a Agregar: *" />
-                                        <x-input wire:model="orderAmount" placeholder="Ingrese Cantidad" type="number" class="w-full" />
+                                        <x-input wire:model="orderAmount" placeholder="Ingrese Cantidad"
+                                            type="number" class="w-full" />
                                         <x-input-error for="orderAmount" />
                                     </div>
 

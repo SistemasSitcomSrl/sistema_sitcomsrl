@@ -5,10 +5,8 @@ namespace App\Livewire\SolicitudCrear;
 use App\Models\Branch;
 use App\Models\Inventory;
 use App\Models\TransfersInventories;
-
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 
@@ -81,7 +79,7 @@ class CreateInventory extends Component
         'searchForm.create_location' => 'ubicación',
         'searchForm.create_unit_measure' => 'unidad',
         'searchForm.create_price' => 'precio',
-        'searchForm.create_image' => 'imagen',
+        'create_image' => 'imagen',
         'searchForm.select_type' => 'tipo hta.'
     ];
     public function mount()
@@ -306,7 +304,15 @@ class CreateInventory extends Component
                 ]);
             }
             $this->dispatch('alert', 'Creado con Exito');
-            return redirect('solicitud');
+            
+            $rol = Auth::user()->roles->first()->name ?? 'default';
+
+            switch ($rol) {
+                case 'Encargado de Almacen':
+                    return redirect('solicitud');
+                case 'Encargado de Activo':
+                    return redirect('solicitud_activo');
+            }
 
         } else {
             $this->dispatch('alert2', 'Seleccione una Herramienta');
@@ -362,7 +368,14 @@ class CreateInventory extends Component
     }
     public function returnShow_movements()
     {
-        return redirect('solicitud');
+        $rol = Auth::user()->roles->first()->name ?? 'default';
+
+        switch ($rol) {
+            case 'Encargado de Almacen':
+                return redirect('solicitud');
+            case 'Encargado de Activo':
+                return redirect('solicitud_activo');
+        }
     }
     public function updatingSearch()
     {
@@ -385,6 +398,8 @@ class CreateInventory extends Component
     {
         $orderInventories = Inventory::whereKey($this->array_tool_id)->get();
 
+        $rol = Auth::user()->roles->first()->name ?? 'default';
+
         $branch_id = Branch::where('user_id', Auth::user()->id)->value('id');
 
         $movements = Inventory::where(function ($query) use ($branch_id) {
@@ -398,6 +413,6 @@ class CreateInventory extends Component
             ->orderBy($this->sort, $this->direction)
             ->simplePaginate($this->cant);
 
-        return view('livewire.solicitudCrear.create-inventory', compact('movements', 'orderInventories'));
+        return view('livewire.solicitudCrear.create-inventory', compact('movements', 'orderInventories','rol'));
     }
 }

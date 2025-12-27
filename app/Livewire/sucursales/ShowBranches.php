@@ -5,6 +5,8 @@ namespace App\Livewire\Sucursales;
 use App\Models\Branch;
 use App\Models\Trasnfer;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -108,7 +110,17 @@ class ShowBranches extends Component
             'selectedInput.required' => 'Seleccione un Encargado',
         ]);
 
+ 
         $branch = Branch::find($idBranch);
+
+        //Eliminar session de usuario
+        $userId = $branch->user_id;
+        $userSession = DB::table('sessions')->where('user_id', $userId)->first();
+        if ($userSession) {
+            DB::table('sessions')->where('id', $userSession->id)->delete();
+        }
+
+        //Actualizar Encargado de Sucursal Almacen o Activo
         $branch->update([
             'user_id' => $this->selectedInput
         ]);
@@ -186,14 +198,17 @@ class ShowBranches extends Component
         }
     }
     public function render()
-    {
+    {      
         $users = User::doesntHave('branches')
             ->select('id', 'name', 'email', 'company_position')
             ->Where('id', '<>', 1)
             ->Where('state', 1)
             ->get();
+
         $branches = Branch::join('users', 'users.id', '=', 'branches.user_id')
-            ->select('branches.*', 'users.name as name_user', 'users.company_position as company_position')
+            ->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->select('branches.*', 'users.name as name_user', 'users.company_position as company_position', 'roles.name as rol')
             ->where('branches.name', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->cant);

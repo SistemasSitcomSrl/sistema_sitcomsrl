@@ -83,10 +83,11 @@ class ShowInventoryRetired extends Component
             ->where('transfer_requireds.receipt_number', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->direction);
 
+    
         // Filtrar por sucursal según el rol y la ruta
         switch ($rol) {
             case 'Administrador':
-                $branch_ids = $rutaActual == 'admin.retired.index' ? $activo_rol_branch : array_diff(Branch::pluck('id')->toArray(), $activo_rol_branch);
+                $branch_ids = $rutaActual == 'admin.retired_asset.index' ? $activo_rol_branch : array_diff(Branch::pluck('id')->toArray(), $activo_rol_branch);
                 $query->whereIn('transfer_requireds.branch_id', $branch_ids);
                 break;
 
@@ -96,6 +97,7 @@ class ShowInventoryRetired extends Component
                 $query->where('transfer_requireds.branch_id', $branch_id);
                 break;
         }
+
         // Paginar
         $movements = $query->paginate($this->cant);
 

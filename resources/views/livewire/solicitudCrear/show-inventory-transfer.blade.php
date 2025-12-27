@@ -22,7 +22,7 @@
                 <x-input class="flex-1 mx-2" placeholder="Buscador Numero de Solicitud" type="text"
                     wire:model.live="search" />
                 @can('admin.request.create')
-                    <a href="{{ Route('admin.inventory.create') }}">
+                    <a href="{{ Route('admin.request.create') }}">
                         <x-secondary-button>
                             <i class="fa-solid fa-plus"></i> &nbsp;Crear Solictud
                         </x-secondary-button>

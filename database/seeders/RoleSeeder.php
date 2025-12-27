@@ -14,6 +14,7 @@ class RoleSeeder extends Seeder
         $admin = Role::create(['name' => 'Administrador']);
         $almacen = Role::create(['name' => 'Encargado de Almacen']);
         $activo = Role::create(['name' => 'Encargado de Activo']);
+        $agente_servicio = Role::create(['name' => 'Agente de Servicio']);
 
         //Inicio Lista
         Permission::create([
@@ -103,7 +104,7 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'admin.branch.index',
             'description' => 'Lista Sucursales'
-        ])->syncRoles([$admin, $almacen]);
+        ])->syncRoles([$admin]);
 
         //Sucursal Crear
         Permission::create([
@@ -123,11 +124,17 @@ class RoleSeeder extends Seeder
             'description' => 'Encargado Sucursal'
         ])->syncRoles([$admin]);
 
-        //Inventario Lista
+        //Inventario Lista 
         Permission::create([
             'name' => 'admin.inventory.index',
-            'description' => 'Lista Inventario'
-        ])->syncRoles([$admin, $almacen, $activo]);
+            'description' => 'Lista Inventario Almacen'
+        ])->syncRoles([$admin, $almacen]);
+
+        //Inventario Lista 
+        Permission::create([
+            'name' => 'admin.inventory.index_activo',
+            'description' => 'Lista Inventario Activo'
+        ])->syncRoles([$admin, $activo]);
 
         //Inventario Ver
         Permission::create([
@@ -147,11 +154,17 @@ class RoleSeeder extends Seeder
             'description' => 'Pdf Inventario'
         ])->syncRoles([$admin, $almacen, $activo]);
 
-        //Solicitud Lista
+        //Solicitud Lista Almacen
         Permission::create([
             'name' => 'admin.request.index',
             'description' => 'Lista Solicitudes'
-        ])->syncRoles([$admin, $almacen, $activo]);
+        ])->syncRoles([$admin, $almacen]);
+
+        //Solicitud Lista Activo
+        Permission::create([
+            'name' => 'admin.request.index_activo',
+            'description' => 'Lista Solicitudes'
+        ])->syncRoles([$admin, $activo]);
 
         //Solicitud Crear
         Permission::create([
@@ -195,11 +208,17 @@ class RoleSeeder extends Seeder
             'description' => 'Anular Solicitud'
         ])->syncRoles([$almacen, $activo]);
 
-        //Retirados Lista
+        //Retirados Lista Almacen
         Permission::create([
             'name' => 'admin.retired.index',
             'description' => 'Lista Retirados'
-        ])->syncRoles([$admin, $almacen, $activo]);
+        ])->syncRoles([$admin, $almacen]);
+
+         //Retirados Lista Activo
+         Permission::create([
+            'name' => 'admin.retired.index_activo',
+            'description' => 'Lista Retirados'
+        ])->syncRoles([$admin, $activo]);
 
         //Retirados Crear
         Permission::create([
@@ -347,12 +366,6 @@ class RoleSeeder extends Seeder
             'name' => 'admin.index.activo',
             'description' => 'Lista de Links Activos'
         ])->syncRoles([$admin, $activo]);
-
-
-
-
-
-
 
 
         //Asignar Lista

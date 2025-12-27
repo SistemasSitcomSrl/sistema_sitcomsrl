@@ -12,6 +12,7 @@ class MovementController extends Controller
     public function __construct()
     {
         $this->middleware('can:admin.movement.index')->only('index');
+        $this->middleware('can:admin.movement.create')->only('create');
     }
 
     public function index()
@@ -63,7 +64,12 @@ class MovementController extends Controller
                     ->where('movements.id_project', $id_project)
                     ->where('movements.state', $state)
                     ->get(),
+<<<<<<< HEAD
             'movements_histories' => MovementHistory::select()->get()
+=======
+                    'movements_histories' => MovementHistory::select()->get(),
+                    'state_create' => $state_create
+>>>>>>> 87589e208844ada787a30aa83ef57f0669bee237
         ]);
 
         return $pdf->stream('Comprobante_' . request('movement_receipt_number') . '_' . $date_create . '.pdf');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\Branch;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +51,8 @@ class LoginRequest extends FormRequest
         }
         // Obtén el usuario autenticado
         $user = Auth::user();
+        $rol = Auth::user()->roles->first()->name ?? 'default';
+        $branch = Branch::where('user_id', $user->id)->first();
 
         // Verifica el estado del usuario
         if ($user && $user->state == false) {
@@ -59,6 +62,18 @@ class LoginRequest extends FormRequest
             throw ValidationException::withMessages([
                 'ci' => trans('auth.not_allowed'),
             ]);
+        }   
+
+        // Verifica si el usuario tiene una sucursal asignada
+        if ($rol !='Administrador') {           
+            if ($branch == null) {
+                Auth::logout();  // Cierra la sesión si el estado es falso
+                RateLimiter::hit($this->throttleKey());
+
+                throw ValidationException::withMessages([
+                    'ci' => trans('auth.not_branch'),
+                ]);
+            }
         }
 
         RateLimiter::clear($this->throttleKey());

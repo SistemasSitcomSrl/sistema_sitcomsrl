@@ -1,6 +1,10 @@
 {
   "resources/css/app.css": {
+<<<<<<< HEAD
     "file": "assets/app-C-veXSO_.css",
+=======
+    "file": "assets/app-C612KkzF.css",
+>>>>>>> 87589e208844ada787a30aa83ef57f0669bee237
     "src": "resources/css/app.css",
     "isEntry": true
   },

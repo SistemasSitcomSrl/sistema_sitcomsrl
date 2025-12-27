@@ -553,12 +553,19 @@
                                         @endif
 
                                         <option value="" disabled selected>Seleccione Tipo</option>
-                                        <option value="activo">Activo Fijo
-                                        </option>
-                                        <option value="herramienta">Herramienta
-                                        </option>
-                                        <option value="material">Material
-                                        </option>
+                                        @switch($rol)
+                                            @case('Encargado de Almacen')
+                                                <option value="herramienta">Herramienta
+                                                </option>
+                                                <option value="material">Material
+                                                </option>
+                                            @break
+
+                                            @case('Encargado de Activo')
+                                                <option value="activo">Activo Fijo
+                                                </option>
+                                            @break
+                                        @endswitch
                                         </select>
                                         <x-input-error for="editForm.select_type" />
                                     </div>

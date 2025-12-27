@@ -148,8 +148,16 @@ class CreateInventoryRetired extends Component
                 ]);
                 Inventory::where('id', $inventory_save->id)->decrement('amount', 1);
             }
+
             $this->dispatch('alert', 'Creado con Exito');
-            return redirect('retirado');
+            $rol = Auth::user()->roles->first()->name ?? 'default';
+            switch ($rol) {
+                case 'Encargado de Almacen':
+                    return redirect('retirado');
+                case 'Encargado de Activo':
+                    return redirect('retirado_activo');
+            }
+            
         } else {
             $this->dispatch('alert2', 'Seleccione una Herramienta');
         }
@@ -166,7 +174,13 @@ class CreateInventoryRetired extends Component
 
     public function returnShow_movements()
     {
-        return redirect('retirado');
+        $rol = Auth::user()->roles->first()->name ?? 'default';
+        switch ($rol) {
+            case 'Encargado de Almacen':
+                return redirect('retirado');
+            case 'Encargado de Activo':
+                return redirect('retirado_activo');
+        }
     }
     public function updatingSearch()
     {

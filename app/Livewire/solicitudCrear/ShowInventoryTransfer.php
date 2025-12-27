@@ -95,7 +95,8 @@ class ShowInventoryTransfer extends Component
         // Filtrar por sucursal según el rol y la ruta
         switch ($rol) {
             case 'Administrador':
-                $branch_ids = $rutaActual == 'admin.request.index' ? $activo_rol_branch : array_diff(Branch::pluck('id')->toArray(), $activo_rol_branch);
+             
+                $branch_ids = $rutaActual == 'admin.request_asset.index' ? $activo_rol_branch : array_diff(Branch::pluck('id')->toArray(), $activo_rol_branch);
                 $query->whereIn('transfers_inventories.branch_id', $branch_ids);
                 break;
 
@@ -105,7 +106,6 @@ class ShowInventoryTransfer extends Component
                 $query->where('transfers_inventories.branch_id', $branch_id);
                 break;
         }
-
         // Paginar
         $movements = $query->paginate($this->cant);
         return view('livewire.solicitudCrear.show-inventory-transfer', compact('movements'));

@@ -247,7 +247,7 @@
                                 @if ($movement->state_create != 3)
                                     @can('admin.movement.pdf')
                                         <div class="pl-1">
-                                            <form method="POST" action="{{ route('download') }}">
+                                            <form method="POST" action="{{ route('admin.movement.download') }}">
                                                 @csrf
                                                 <div>
                                                     <input type="text" name="state_create"

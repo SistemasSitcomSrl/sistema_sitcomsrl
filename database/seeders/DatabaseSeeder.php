@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Inventory;
 use App\Models\User;
 use App\Models\Projects;
-use App\Models\Movements;
-use App\Models\Workers;
-
+use Illuminate\Support\Facades\Storage;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -21,6 +19,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Storage::deleteDirectory('livewire-tmp');
+        Storage::deleteDirectory('temp-images');
+        Storage::deleteDirectory('tool');
+
+        Storage::makeDirectory('livewire-tmp');
+        Storage::makeDirectory('temp-images');
+        Storage::makeDirectory('tool');
         $this->call(RoleSeeder::class);
 
         User::create([
@@ -55,7 +60,7 @@ class DatabaseSeeder extends Seeder
 
         Branch::create([
             'id' => '1',
-            'name' => 'Activo Fijos',
+            'name' => 'Santa Cruz',
             'department' => 'Santa Cruz',
             'direction' => 'Dir. Av. Mariscal Santa Cruz # 6350',
             'number_phone' => '73131938',
@@ -63,213 +68,11 @@ class DatabaseSeeder extends Seeder
         ]);
         Branch::create([
             'id' => '2',
-            'name' => 'Sucursal Santa Cruz',
+            'name' => 'Santa Cruz',
             'department' => 'Santa Cruz',
             'direction' => 'Dir. Av. Mariscal Santa Cruz # 6350',
             'number_phone' => '74636352',
             'user_id' => '3'
         ]);    
-
-        Projects::create([
-            'cuce' => '4651-4542-4242A',
-            'type' => 'LP',
-            'object' => 'Mantenimiento Control de Acceso Gestion 2024',
-            'entity' => 'YPFB',
-            'ubi_entity' => 'Santa Cruz',
-            'ubi_projects' => 'Santa Cruz',
-            'date_opening' => '12-09-12',
-            'date_notification' => '12-09-12',
-            'reference_price' => '150000',
-            'id_user' => 2,
-        ]);
-        // Inventory::factory(100)->create();
-
-        // Workers::create([
-        //     'ci' => '8178854',
-        //     'name' => 'Juan',
-        //     'last_name' => 'Perez',
-        //     'phone_number' => '73131938',
-        //     'ubication' => 'Santa Cruz',
-        //     'company_position' => 'Encargado de Activo',  
-        // ]);
-        // Workers::create([
-        //     'ci' => '81819556',
-        //     'name' => 'Pedro',
-        //     'last_name' => 'Gonzalez',
-        //     'phone_number' => '123456789',
-        //     'ubication' => 'La Paz',
-        //     'company_position' => 'Empleado',          
-        // ]);
-
-        // AssetAllocation::create([
-        //     'receipt_number'=> 'A-1.1',
-        //     'movement_type'=> 'trabajo',
-        //     'departure_date'=> '2024-04-30',
-        //     'departure_time'=> '10:00:58',
-        //     'return_date'=> null,
-        //     'return_time'=> null,
-        //     'missing_amount'=> 10,
-        //     'state'=> 0,
-        //     'state_create'=> 0,
-        //     'branch_id'=> 1,
-        //     'auth'=> 2,
-        //     'id_worker'=> 1,
-        //     'id_inventory'=> 100,
-        // ]);
-
-        // AssetAllocation::create([
-        //     'receipt_number'=> 'A-1.1',
-        //     'movement_type'=> 'trabajo',
-        //     'departure_date'=> '2024-04-30',
-        //     'departure_time'=> '10:00:58',
-        //     'return_date'=> null,
-        //     'return_time'=> null,
-        //     'missing_amount'=> 10,
-        //     'state'=> 0,
-        //     'state_create'=> 0,
-        //     'branch_id'=> 1,
-        //     'auth'=> 2,
-        //     'id_worker'=> 1,
-        //     'id_inventory'=> 99,
-        // ]);
-
-        // AssetAllocation::create([
-        //     'receipt_number'=> 'A-1.2',
-        //     'movement_type'=> 'trabajo',
-        //     'departure_date'=> '2024-04-30',
-        //     'departure_time'=> '10:00:58',
-        //     'return_date'=> null,
-        //     'return_time'=> null,
-        //     'missing_amount'=> 10,
-        //     'state'=> 0,
-        //     'state_create'=> 0,
-        //     'branch_id'=> 1,
-        //     'auth'=> 2,
-        //     'id_worker'=> 1,
-        //     'id_inventory'=> 98,
-        // ]);
-
-        // AssetAllocation::create([
-        //     'receipt_number'=> 'A-1.3',
-        //     'movement_type'=> 'trabajo',
-        //     'departure_date'=> '2024-04-30',
-        //     'departure_time'=> '10:00:58',
-        //     'return_date'=> null,
-        //     'return_time'=> null,
-        //     'missing_amount'=> 10,
-        //     'state'=> 0,
-        //     'state_create'=> 0,
-        //     'branch_id'=> 1,
-        //     'auth'=> 2,
-        //     'id_worker'=> 1,
-        //     'id_inventory'=> 96,
-        // ]);
-        // AssetAllocation::create([
-        //     'receipt_number'=> 'A-1.3',
-        //     'movement_type'=> 'trabajo',
-        //     'departure_date'=> '2024-04-30',
-        //     'departure_time'=> '10:00:58',
-        //     'return_date'=> null,
-        //     'return_time'=> null,
-        //     'missing_amount'=> 10,
-        //     'state'=> 0,
-        //     'state_create'=> 0,
-        //     'branch_id'=> 1,
-        //     'auth'=> 2,
-        //     'id_worker'=> 1,
-        //     'id_inventory'=> 98,
-        // ]);  
-        // Projects::create([
-        //     'cuce' => '4651-4542-4242A',
-        //     'type' => 'LP',
-        //     'object' => 'Mantenimiento Aires Acondicionados',
-        //     'entity' => 'YPFB',
-        //     'ubi_entity' => 'Santa Cruz',
-        //     'ubi_projects' => 'Santa Cruz',
-        //     'date_opening' => '12-09-12',
-        //     'date_notification' => '12-09-12',
-        //     'reference_price' => '150000',
-        //     'id_user' => 2,
-        // ]);   
-
-        // Movements::create([
-        //     'receipt_number' => 'M-1.1',
-        //     'movement_type' => 'trabajo',
-        //     'departure_date' => '2024-04-30',
-        //     'departure_time' => '10:00:58',
-        //     'return_date' => null,
-        //     'return_time' => null,
-        //     'missing_amount' => 10,
-        //     'state' => 0,
-        //     'state_create' => 0,
-        //     'branch_id' => 2,
-        //     'auth' => 3,
-        //     'id_project' => 1,
-        //     'id_inventory' => 100,
-        // ]);
-
-        // Movements::create([
-        //     'receipt_number' => 'M-1.1',
-        //     'movement_type' => 'trabajo',
-        //     'departure_date' => '2024-04-30',
-        //     'departure_time' => '10:00:58',
-        //     'return_date' => null,
-        //     'return_time' => null,
-        //     'missing_amount' => 10,
-        //     'state' => 0,
-        //     'state_create' => 0,
-        //     'branch_id' => 2,
-        //     'auth' => 3,
-        //     'id_project' => 1,
-        //     'id_inventory' => 99,
-        // ]);
-
-        // Movements::create([
-        //     'receipt_number' => 'M-1.2',
-        //     'movement_type' => 'trabajo',
-        //     'departure_date' => '2024-04-30',
-        //     'departure_time' => '10:00:58',
-        //     'return_date' => null,
-        //     'return_time' => null,
-        //     'missing_amount' => 10,
-        //     'state' => 0,
-        //     'state_create' => 0,
-        //     'branch_id' => 2,
-        //     'auth' => 3,
-        //     'id_project' => 1,
-        //     'id_inventory' => 98,
-        // ]);
-
-        // Movements::create([
-        //     'receipt_number' => 'M-1.3',
-        //     'movement_type' => 'trabajo',
-        //     'departure_date' => '2024-04-30',
-        //     'departure_time' => '10:00:58',
-        //     'return_date' => null,
-        //     'return_time' => null,
-        //     'missing_amount' => 10,
-        //     'state' => 0,
-        //     'state_create' => 0,
-        //     'branch_id' => 2,
-        //     'auth' => 3,
-        //     'id_project' => 1,
-        //     'id_inventory' => 96,
-        // ]);
-        // Movements::create([
-        //     'receipt_number' => 'M-1.3',
-        //     'movement_type' => 'trabajo',
-        //     'departure_date' => '2024-04-30',
-        //     'departure_time' => '10:00:58',
-        //     'return_date' => null,
-        //     'return_time' => null,
-        //     'missing_amount' => 10,
-        //     'state' => 0,
-        //     'state_create' => 0,
-        //     'branch_id' => 2,
-        //     'auth' => 3,
-        //     'id_project' => 1,
-        //     'id_inventory' => 98,
-        // ]);
-
     }
 }
