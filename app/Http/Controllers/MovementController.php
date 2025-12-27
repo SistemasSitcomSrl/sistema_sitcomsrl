@@ -18,7 +18,7 @@ class MovementController extends Controller
     public function index()
     {
         return view('admin.movement.index');
-    }
+    } 
     public function create()
     {
         return view('admin.movement.create');
